@@ -1,14 +1,51 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8"/>
-    <title><%= htmlWebpackPlugin.options.title %></title>
-    <link rel="stylesheet" href="assets/styles.css">
-  </head>
-  <body>
-    <p>
-      Hello! Open the developer tools, please.<br />
-      Start by editing the files in <code>src/</code> folder.
-    </p>
-  </body>
+
+<head>
+  <meta charset="utf-8" />
+  <title>
+    <%= htmlWebpackPlugin.options.title %>
+  </title>
+</head>
+
+<body>
+  <nav class=topnav>
+    <div id="logo-container">
+      <img src="assets/icons/logo.svg">
+    </div>
+    <ul class="nav-items">
+      <li><a href="#">Toimipiste</a></li>
+      <li><a href="#">Ruokalistat</a></li>
+      <li><a href="#">Liikenneyhteydet</a></li>
+    </ul>
+  </nav>
+  <header class="banner">
+    <div class="banner-img-container">
+      <div class="banner-title">
+        <h1>Metropolia Info</h1>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="menu-cards-container">
+      <article class="menu-card" id="card1">
+        <div class="menu-card-img-container">
+          <img src="#">
+        </div>
+        <ul class="menu-card-list"></ul>
+      </article>
+    </div>
+    <div id="add-restaurant-container">
+      <button id="add-restaurant-btn" name="add-restaurant">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          class="feather feather-plus">
+          <line x1="12" y1="5" x2="12" y2="19" />
+          <line x1="5" y1="12" x2="19" y2="12" />
+        </svg>
+      </button>
+    </div>
+  </main>
+</body>
+
 </html>

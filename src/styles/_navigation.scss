@@ -1,0 +1,31 @@
+.topnav {
+  display: flex;
+  width: 100vw;
+  margin: auto;
+  overflow: hidden;
+  background-color: $dark-grey;
+
+  #logo-container {
+    flex: 1;
+  }
+
+  img {
+    height: 70px;
+  }
+
+  ul {
+    flex: 3;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    list-style: none;
+  }
+
+  a {
+    font-size: 1.2em;
+    padding: 0.5em;
+    text-decoration: none;
+    border-radius: 0.25em;
+    color: #fff;
+  }
+}

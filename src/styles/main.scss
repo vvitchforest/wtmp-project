@@ -1,0 +1,46 @@
+@import 'base';
+
+html, body {
+  overflow-x: hidden;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+@import 'navigation';
+
+/*BANNER*/
+
+.banner {
+  display: flex;;
+  height: 30vh;
+}
+
+.banner-img-container {
+  background-image: url(../assets/images/bg-image.jpg);
+  background-position: center;
+  background-size: cover;
+  width: 100%;
+  position: relative;
+}
+
+.banner-title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.banner-img-container::before {
+    content: "";
+    position: absolute;
+    left: 30%;
+    right:30%;
+    top: 30%;
+    bottom: 30%;
+    background: rgba(255, 255, 255, 0.5);
+}
