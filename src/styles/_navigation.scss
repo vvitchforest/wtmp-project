@@ -1,9 +1,12 @@
 .topnav {
   display: flex;
   width: 100vw;
+  height: 8vh;
   margin: auto;
   overflow: hidden;
-  background-color: $dark-grey;
+  background-color: var(--nav-color);
+  border-bottom: 1px solid grey;
+  padding: 0 3em;
 
   #logo-container {
     flex: 1;
@@ -11,6 +14,7 @@
 
   img {
     height: 70px;
+    padding-top: 0.5em;
   }
 
   ul {
@@ -26,6 +30,6 @@
     padding: 0.5em;
     text-decoration: none;
     border-radius: 0.25em;
-    color: #fff;
+    color: var(--text-color);
   }
 }

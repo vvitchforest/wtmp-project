@@ -1,0 +1,59 @@
+.theme-switch-container {
+  position: absolute;
+  top: 5%;;
+  right: 5%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  font-family: "Lato", sans-serif;
+}
+
+.theme-switch {
+  position: relative;
+  width: 3.125em;
+  height: 1.75em;
+}
+
+.theme-switch input {
+  display: none;
+}
+
+.slider-theme {
+  background-color: $lightgrey;
+  box-shadow: 2px 4px 7px var(--shadow);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  border-radius: 1.25em;
+  cursor: pointer;
+  transition: all 0.4s ease-in-out;
+
+}
+
+input:checked + .slider-theme {
+  background-color: $greymist;
+}
+
+.slider-theme::before {
+  content: '';
+  background-color: $secondary;
+  background-image: url('../assets/icons/moon-outline.svg');
+  background-size: 1.5em;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: absolute;
+  width: 2em;
+  height: 2em;
+  left: 0;
+  bottom: -2px;
+  border-radius: 50%;
+  transition: all 0.2s ease-in-out;
+}
+
+input:checked + .slider-theme::before {
+  transform: translateX(1.375em);
+}
+
+

@@ -21,31 +21,93 @@
   </nav>
   <header class="banner">
     <div class="banner-img-container">
-      <div class="banner-title">
-        <h1>Metropolia Info</h1>
+      <div id="left">
+        <div class="banner-title">
+          <h1>Metropolia Info</h1>
+          <h2>Karaportti</h2>
+          <p>Metropolia Info on infosovellus, joka näyttää ajankohtaista infoa, päivittäiset ja viikoittaiset
+            ruokalistat ja liikenneyhteydet kampuksella.</p>
+        </div>
+      </div>
+      <div id="right">
+        <div class="theme-switch-container">
+          <label class="theme-switch" for="checkbox">
+            <input type="checkbox" id="checkbox">
+            <div class="slider-theme"></div>
+          </label>
+        </div>
+        <section id="info-container">
+          <h1>Ajankohtaista</h1>
+          <div class="info-card">
+            <h2>COVID-19 tiedote</h2>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita quaerat repudiandae ad error
+              dignissimos
+              aspernatur quibusdam molestias facilis vel laborum corrupti quae architecto quod inventore voluptatum
+              molestiae, quos enim perspiciatis?
+              Quam at magnam cupiditate temporibus obcaecati molestiae libero assumenda, similique odio tempora, eum sit
+              modi asperiores ut beatae enim vel aperiam labore odit! Beatae ipsa mollitia doloremque sit. Dignissimos,
+              provident?
+              Quo possimus voluptates nihil consectetur eligendi sed laborum provident. Alias accusamus labore, animi
+              harum
+              blanditiis voluptatum, quo modi error eligendi id quaerat minus ipsa in. Dolorem temporibus aspernatur
+              odio
+              eum!
+              Debitis, delectus quo. Dolorem iste quasi obcaecati vitae hic! Tenetur harum nobis cupiditate quisquam
+              quae
+              voluptatem autem suscipit officia quos iste quibusdam ab, laudantium officiis voluptate. Expedita pariatur
+              placeat earum?
+              Esse temporibus, totam suscipit iste dolor explicabo rerum officiis eaque, vitae modi a. Quidem, eos
+              nostrum
+              iste est debitis tenetur possimus placeat qui aliquam blanditiis atque necessitatibus deleniti natus
+              optio?
+            </p>
+          </div>
+        </section>
       </div>
     </div>
   </header>
-  <main>
-    <div class="menu-cards-container">
-      <article class="menu-card" id="card1">
-        <div class="menu-card-img-container">
-          <img src="#">
+  <div class="restaurants-bg">
+    <img src="./assets/images/bg_0000_noodles.png" class="dish-images" id="noodles" data-speed="2">
+    <img src="./assets/images/bg_0001_pasta.png" class="dish-images" id="pasta" data-speed="-3">
+    <img src="./assets/images/bg_0002_rice.png" class="dish-images" id="rice" data-speed="3">
+    <img src="./assets/images/bg_0003_toast.png" class="dish-images" id="toast" data-speed="-2">
+    <img src="./assets/images/bg_0004_soup.png" class="dish-images" id="soup" data-speed="-3">
+    <img src="./assets/images/plants.png" class="decoration" id="plants">
+    <div class="restaurants-content">
+      <div id="restaurants-title-container">
+        <h1>Ruokalistat</h1><br>
+        <p>Metropolian ravintoloiden päivittäiset ruokalistat löytyvät täältä. Viikoittaisiin ruokalistoihin pääset
+          painamalla ravintolan logoa.</p>
+        <div id="menu-btn-container">
+          <button id="menu-language-btn">FI/EN</button>
+          <button id="add-restaurant-btn" name="add-restaurant">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="feather feather-plus">
+              <line x1="12" y1="5" x2="12" y2="19" />
+              <line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
+          </button>
         </div>
-        <ul class="menu-card-list"></ul>
-      </article>
+      </div>
+      <div class="menu-cards-container">
+        <article class="menu-card" id="card1">
+          <div class="menu-card-header">
+          </div>
+          <div class="menu-card-content"></div>
+        </article>
+        <article class="menu-card" id="card2">
+          <div class="menu-card-header">
+          </div>
+          <div class="menu-card-content"></div>
+        </article>
+      </div>
     </div>
-    <div id="add-restaurant-container">
-      <button id="add-restaurant-btn" name="add-restaurant">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-          class="feather feather-plus">
-          <line x1="12" y1="5" x2="12" y2="19" />
-          <line x1="5" y1="12" x2="19" y2="12" />
-        </svg>
-      </button>
-    </div>
-  </main>
+  </div>
+
+
+
+
 </body>
 
 </html>

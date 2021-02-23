@@ -1,0 +1,148 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+
+.restaurants-bg {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  background: url("../assets/images/bg.jpg") repeat center center fixed;
+  background-size: cover;
+  font-family: "Raleway", sans-serif;
+
+
+}
+
+.restaurants-content {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 9;
+}
+
+#restaurants-title-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 3em;
+  color: #fff;
+}
+
+.menu-cards-container {
+  flex: 6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.dish-images {
+  border-radius: 50%;
+  box-shadow: 5px 7px 30px rgb(32, 32, 32);
+  position: absolute;
+}
+
+.decoration {
+  position: absolute;
+}
+
+#noodles  {
+  height: 100px;
+  width: 100px;
+  top: 6%;
+  left: 60%;
+}
+
+#pasta {
+  height: 100px;
+  width: 100px;
+  top: 50%;
+  left: 40%;
+}
+
+#rice {
+  height: 100px;
+  width: 100px;
+  top: 55%;
+  left: 7%;
+}
+
+#soup {
+  height: 150px;
+  width: 150px;
+  top: 47%;
+  left: 73%;
+}
+
+#toast {
+  height: 150px;
+  width: 150px;
+  top: 5%;
+  left: 20%;
+}
+
+#plants {
+  height: 100%;
+}
+
+
+@media only screen and (max-width: 1350px) {
+  .dish-images {
+      transform: scale(0.7, 0.7) translateX(-10%);
+  }
+
+  }
+
+  @media only screen and (max-width: 1100px) {
+      .dish-images {
+          transform: scale(0.6, 0.6) translateX(-40%);
+      }
+
+      }
+
+
+@media only screen and (max-width: 768px) {
+.dish-images {
+    transform: scale(0.5, 0.5) translateX(-60%);
+}
+
+#mouse-container {
+    display: none;
+}
+
+}
+
+@media only screen and (max-width: 600px) {
+  .dish-images {
+      transform: scale(0.4, 0.4) translateX(-90%);
+  }
+
+  }
+
+  @media only screen and (max-width: 600px) {
+      .dish-images {
+          transform: scale(0.3, 0.3) translateX(-100%);
+      }
+
+      #pasta {
+          transform: scale(0.3, 0.3) translate(-100%, -100%);
+      }
+
+      #soup {
+          transform: scale(0.3, 0.3) translate(-200%, +80%);
+
+      }
+
+      }

@@ -10,37 +10,105 @@ html, body {
   box-sizing: border-box;
 }
 
+body {
+  background-color: var(--bg-color);
+}
+
 
 @import 'navigation';
 
 /*BANNER*/
 
 .banner {
-  display: flex;;
-  height: 30vh;
+  display: flex;
+  height: 92vh;
 }
 
 .banner-img-container {
-  background-image: url(../assets/images/bg-image.jpg);
-  background-position: center;
-  background-size: cover;
+  background-color: var(--bg-color);
   width: 100%;
+  position: relative;
+  display: flex;
+}
+
+#left {
+  flex: 1;
   position: relative;
 }
 
-.banner-title {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+#right{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }
 
-.banner-img-container::before {
+@import 'themeswitch';
+@import 'restaurants';
+
+.banner-title {
+  position: absolute;
+  top: 15%;
+  left: 15%;
+  padding: 2em;
+  color: var(--heading-color);
+}
+
+.banner-title > h1 {
+  font-size: 4em;
+  letter-spacing: 0.05em;
+}
+
+.banner-title > h2 {
+  font-size: 3em;
+}
+
+.banner-title > p {
+  font-size: 2em;
+}
+
+#info-container > h1{
+  position: absolute;
+  top: 20%;
+  text-align: center;
+  font-size: 3em;
+  color: var(--heading-color);
+}
+
+
+.info-card {
+  max-width: 40em;
+  background-color: var(--card-color);
+  color: var(--text-color);
+  padding: 1em;
+  border: none;
+  border-radius: $card-border-radius;
+  box-shadow: 2px 5px 10px var(--shadow);
+}
+/*.banner-img-container::before {
     content: "";
     position: absolute;
-    left: 30%;
-    right:30%;
-    top: 30%;
-    bottom: 30%;
-    background: rgba(255, 255, 255, 0.5);
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.7);
+}*/
+
+
+/*CARDS*/
+
+.menu-card {
+  display: flex;
+  width: 35vw;
+  background-color: $white;
+  border: none;
+  border-radius: 0.5em;
+  padding: 1.5em;
+  margin-bottom: 2em;
+  box-shadow: 2px 3px 15px $black;
 }
+
+

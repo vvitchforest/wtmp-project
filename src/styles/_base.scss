@@ -1,2 +1,35 @@
-$primary-color: teal;
-$dark-grey: #424442;
+/*THEME COLOURS*/
+$primary: #ff7820;
+$secondary:  #503592;
+$green: #d0e6c2;
+$green-shadow: #a3b398;
+$white: ghostwhite;
+$lightgrey: #e7f2fd;
+$greymist: #9BADBF;
+$charcoal: #343A40;
+$dusk: #252032;
+$dark: #0d1117;
+$black: #000000;
+
+/*Colours need to be converted to CSS variables, because switching to dark theme doesn't work with SASS variables*/
+:root {
+  --bg-color: #{$green};
+  --text-color: #{$charcoal};
+  --shadow: #{$green-shadow};
+  --card-color: #{$white};
+  --nav-color: #{$white};
+  --heading-color: #{$black};
+}
+
+/*DARK THEME*/
+
+[data-theme="dark"] {
+  --bg-color: #{$dark};
+  --text-color: #{$lightgrey};
+  --shadow: #{$black};
+  --card-color: #{$dusk};
+  --nav-color: #{$dusk};
+  --heading-color: #{$lightgrey};
+}
+
+$card-border-radius: 0.5em;
