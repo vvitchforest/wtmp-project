@@ -2,6 +2,7 @@
 
 html, body {
   overflow-x: hidden;
+  height: 100%;
 }
 
 * {
@@ -57,23 +58,23 @@ body {
 }
 
 .banner-title > h1 {
-  font-size: 4em;
+  font-size: $h1-size;
   letter-spacing: 0.05em;
 }
 
 .banner-title > h2 {
-  font-size: 3em;
+  font-size: $h2-size;
 }
 
 .banner-title > p {
-  font-size: 2em;
+  font-size: $p-large;
 }
 
-#info-container > h1{
+#info-container > h2{
   position: absolute;
   top: 20%;
   text-align: center;
-  font-size: 3em;
+  font-size: $h2-size;
   color: var(--heading-color);
 }
 
@@ -98,17 +99,6 @@ body {
 }*/
 
 
-/*CARDS*/
 
-.menu-card {
-  display: flex;
-  width: 35vw;
-  background-color: $white;
-  border: none;
-  border-radius: 0.5em;
-  padding: 1.5em;
-  margin-bottom: 2em;
-  box-shadow: 2px 3px 15px $black;
-}
 
 

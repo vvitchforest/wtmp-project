@@ -8,17 +8,30 @@ const dailyUrl = `https://www.sodexo.fi/ruokalistat/output/daily_json/152/`;
  * @returns {Object} parsed menu arrays
  */
 const parseSodexoMenu = (sodexoMenu) => {
+  console.log(sodexoMenu);
   const coursesFi = [];
   const coursesEn = [];
-
   if (sodexoMenu == null) {
     coursesFi.push('Tälle päivälle ei löytynyt aterioita');
     coursesEn.push('No meals were found for this day');
   } else {
     const courses = Object.values(sodexoMenu);
     courses.forEach((course) => {
-      coursesFi.push(course.title_fi);
-      coursesEn.push(course.title_en);
+
+      const courseFin = {
+        title: course.title_fi,
+        diets: course.dietcodes,
+        price: course.price
+      };
+
+      const courseEn = {
+        title: course.title_en,
+        diets: course.dietcodes,
+        price: course.price
+      };
+
+      coursesFi.push(courseFin);
+      coursesEn.push(courseEn);
     });
   }
   return { fi: coursesFi, en: coursesEn };

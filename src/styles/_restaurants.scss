@@ -1,60 +1,15 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html, body {
-  height: 100%;
-}
-
-
+/*BACKGROUND*/
 .restaurants-bg {
   height: 100%;
   width: 100%;
   position: relative;
   overflow: hidden;
-  background: url("../assets/images/bg.jpg") repeat center center fixed;
-  background-size: cover;
-  font-family: "Raleway", sans-serif;
-
-
+  background-color: var(--bg-color);
 }
-
-.restaurants-content {
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  z-index: 9;
-}
-
-#restaurants-title-container {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 3em;
-  color: #fff;
-}
-
-.menu-cards-container {
-  flex: 6;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 
 .dish-images {
   border-radius: 50%;
-  box-shadow: 5px 7px 30px rgb(32, 32, 32);
-  position: absolute;
-}
-
-.decoration {
+  box-shadow: 5px 7px 30px var(--shadow);
   position: absolute;
 }
 
@@ -93,9 +48,67 @@ html, body {
   left: 20%;
 }
 
-#plants {
+/*CONTENT*/
+.restaurants-content {
   height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 9;
 }
+
+#restaurants-title-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3em;
+  color: var(--heading-color);
+}
+
+#restaurants-title-container > h1 {
+  font-size: $h1-size
+}
+
+#restaurants-title-container > p {
+  font-size: $p-large;
+}
+
+#menu-language-btn, #add-restaurant-btn {
+  background-color: $secondary;
+  color: $white;
+  padding: 0.5em 1em;
+  border-radius: 0.5em;
+  border: none;
+  outline: none;
+  box-shadow: 2px 5px 10px var(--shadow);
+  height: 4em;
+  width: 4em;
+}
+
+
+.menu-cards-container {
+  flex: 6;
+  display: flex;
+  justify-content: space-evenly;
+  align-items:flex-start;
+}
+
+
+/*CARDS*/
+.menu-card {
+  display: flex;
+  width: 35vw;
+  background-color: $white;
+  border: none;
+  border-radius: 0.5em;
+  padding: 1.5em;
+  margin-bottom: 2em;
+  box-shadow: 2px 3px 15px var(--shadow);
+}
+
+
 
 
 @media only screen and (max-width: 1350px) {

@@ -12,17 +12,14 @@ console.log(today);
 const menuCard = document.querySelector('#card1 .menu-card-content');
 const menuCardFazer = document.querySelector('#card2 .menu-card-content');
 const languageBtn = document.querySelector('#menu-language-btn');
-const btnContainer = document.querySelector('#menu-btn-container');
 const menuList = document.createElement('ul');
 menuList.classList.add('menu-list');
 const menuListFazer = document.createElement('ul');
 menuListFazer.classList.add('menu-list');
+
 menuCard.appendChild(menuList);
 menuCardFazer.appendChild(menuListFazer);
 const modeToggle = document.getElementById('checkbox');
-const modal = document.getElementById('modal-1');
-const openModalImgBtn = document.querySelector('#card1 .card-img-container');
-const closeModalBtn = document.getElementsByClassName('close')[0];
 
 let userSettings = {
   colorTheme: 'light',
@@ -60,7 +57,7 @@ const createMenu = (menu, list) => {
   list.innerHTML = '';
   menu.forEach((course) => {
     let listItem = document.createElement('li');
-    listItem.innerHTML = course;
+    listItem.innerHTML = course.title + ", " + course.price + ", " + course.diets;
     list.appendChild(listItem);
   });
 };
@@ -81,14 +78,15 @@ const switchLanguage = () => {
 
 const loadData = async () => {
   try {
-    const parsedMenu = await SodexoData.getMenu(userSettings.lang, today);
+    const parsedMenu = await SodexoData.getMenu(userSettings.lang, '2021-02-16');
+    console.log(parsedMenu);
     createMenu(parsedMenu, menuList);
   }
   catch (error) {
     console.error(error);
   }
   try {
-    const parsedMenu = await FazerData.getDailyMenu(userSettings.lang, today);
+    const parsedMenu = await FazerData.getDailyMenu(userSettings.lang, '2020-02-16');
     console.log(parsedMenu);
     createMenu(parsedMenu, menuListFazer);
   } catch (error) {
@@ -96,21 +94,6 @@ const loadData = async () => {
   }
 };
 
-const modalOpen = () => {
-  modal.style.display = 'block';
-  document.body.style.position = 'fixed';
-  document.body.style.top = `-${window.scrollY}px`;
-};
-
-const modalClose = () => {
-  modal.style.display = 'none';
-  document.body.style.position = '';
-  document.body.style.top = '';
-  const scrollY = document.body.style.top;
-  document.body.style.position = '';
-  document.body.style.top = '';
-  window.scrollTo(0, parseInt(scrollY || '0') * -1);
-};
 
 const serviceWorker = () => {
   if ('serviceWorker' in navigator) {
@@ -133,17 +116,9 @@ const init = () => {
       modeToggle.checked = true;
     }
   }
-
   loadData();
   modeToggle.addEventListener('change', switchTheme, false);
   languageBtn.addEventListener('click', switchLanguage);
-  openModalImgBtn.addEventListener('click', modalOpen);
-  closeModalBtn.addEventListener('click', modalClose);
-  window.addEventListener('click', (event) => {
-    if (event.target == modal) {
-      modalClose();
-    }
-  });
 
   //serviceWorker();
 };
