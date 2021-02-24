@@ -9,22 +9,33 @@ console.log(today);
 
 //let languageSetting = 'fi';
 
-const menuCard = document.querySelector('#card1 .menu-card-content');
-const menuCardFazer = document.querySelector('#card2 .menu-card-content');
-const languageBtn = document.querySelector('#menu-language-btn');
-const menuList = document.createElement('ul');
-menuList.classList.add('menu-list');
-const menuListFazer = document.createElement('ul');
-menuListFazer.classList.add('menu-list');
 
-menuCard.appendChild(menuList);
-menuCardFazer.appendChild(menuListFazer);
+const languageBtn = document.querySelector('#menu-language-btn');
 const modeToggle = document.getElementById('checkbox');
 
 let userSettings = {
   colorTheme: 'light',
   lang: 'fi'
 };
+
+const restaurants = [
+  {
+    title: 'Sodexo Myllypuro',
+    name: 'sodexo-myllypuro',
+    id: 158,
+    type: SodexoData
+  }, {
+    title: 'Fazer Karaportti',
+    name: 'fazer-kp',
+    id: 270540,
+    type: FazerData
+  },
+{
+  title: 'Sodexo Myyrmäki',
+  name: 'sodexo-myyrmaki',
+  id: 152,
+  type: SodexoData
+}];
 
 
 /**
@@ -53,14 +64,46 @@ const switchTheme = (event) => {
  * @param {Array} menu lunch menu array
  */
 
-const createMenu = (menu, list) => {
-  list.innerHTML = '';
+const createRestaurantCards = (restaurants) => {
+  const cardContainer = document.querySelector('.menu-cards-container');
+  cardContainer.innerHTML = "";
+  for (const restaurant of restaurants) {
+    const restaurantCard = document.createElement('article');
+    restaurantCard.classList.add('menu-card');
+
+    const cardHeader = document.createElement('div');
+    cardHeader.classList.add('menu-card-header');
+
+    const cardContent = document.createElement('div');
+    cardContent.classList.add('menu-card-content');
+    cardContent.id = restaurant.name;
+
+    restaurantCard.appendChild(cardHeader);
+    restaurantCard.appendChild(cardContent);
+    cardContainer.appendChild(restaurantCard);
+  }
+};
+
+
+const fillMenuCard = (menu, restaurant) => {
+  const cardContent = document.querySelector(`#${restaurant.name}`);
+  cardContent.innerHTML = "";
+  const menuList = document.createElement('ul');
+  menuList.classList.add('menu-list');
+
   menu.forEach((course) => {
     let listItem = document.createElement('li');
     listItem.innerHTML = course.title + ", " + course.price + ", " + course.diets;
-    list.appendChild(listItem);
+    menuList.appendChild(listItem);
   });
+  cardContent.appendChild(menuList);
 };
+
+const noDataNotification = (message, restaurant) => {
+  const cardContent = document.querySelector('#' + restaurant);
+  cardContent.innerHTML = `<p>${message}</p>`;
+};
+
 
 /**
  * Switches language fi/en in Sodexo menu
@@ -77,20 +120,16 @@ const switchLanguage = () => {
 };
 
 const loadData = async () => {
-  try {
-    const parsedMenu = await SodexoData.getMenu(userSettings.lang, '2021-02-16');
-    console.log(parsedMenu);
-    createMenu(parsedMenu, menuList);
-  }
-  catch (error) {
-    console.error(error);
-  }
-  try {
-    const parsedMenu = await FazerData.getDailyMenu(userSettings.lang, '2020-02-16');
-    console.log(parsedMenu);
-    createMenu(parsedMenu, menuListFazer);
-  } catch (error) {
-    console.error(error);
+
+  for (const restaurant of restaurants) {
+    try {
+      const parsedMenu = await restaurant.type.getDailyMenu(restaurant.id, userSettings.lang, today);
+      fillMenuCard(parsedMenu, restaurant);
+    }
+    catch (error) {
+      console.error(error);
+      noDataNotification(`${userSettings.lang == 'fi' ? 'Tälle päivälle ei löytynyt aterioita' : 'No meals were found for this day'}`, restaurant.name);
+    }
   }
 };
 
@@ -107,6 +146,7 @@ const serviceWorker = () => {
   }
 };
 
+
 const init = () => {
   //Load from local storage if exists or use default user settings
   if (localStorage.getItem('userConfig')) {
@@ -116,6 +156,7 @@ const init = () => {
       modeToggle.checked = true;
     }
   }
+  createRestaurantCards(restaurants);
   loadData();
   modeToggle.addEventListener('change', switchTheme, false);
   languageBtn.addEventListener('click', switchLanguage);

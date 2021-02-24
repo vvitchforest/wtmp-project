@@ -6,17 +6,14 @@ console.log(date);*/
 import { fazerProxyUrl } from "../settings";
 import { fetchGet } from './network';
 
-const weeklyUrlFi = `${fazerProxyUrl}/api/restaurant/menu/week?language=fi&restaurantPageId=270540&weekDate=`;
-const weeklyUrlEn = `${fazerProxyUrl}/api/restaurant/menu/week?language=en&restaurantPageId=270540&weekDate=`;
+const weeklyUrlFi = `${fazerProxyUrl}/api/restaurant/menu/week?language=fi`;
+const weeklyUrlEn = `${fazerProxyUrl}/api/restaurant/menu/week?language=en`;
 
 const parseMenu = (weeklyMenu, dayOfTheWeek) => {
   let meals = [];
-  if (weeklyMenu.LunchMenus != null && weeklyMenu.LunchMenus.length > 0) {
-    console.log(weeklyMenu);
-    weeklyMenu.LunchMenus[dayOfTheWeek].SetMenus.forEach((setMenu) => {
-      meals.push(setMenu);
-    });
-  }
+  weeklyMenu.LunchMenus[dayOfTheWeek].SetMenus.forEach((setMenu) => {
+    meals.push(setMenu);
+  });
   return meals;
 };
 
@@ -42,31 +39,25 @@ const filterDiets = (setMenu) => {
   return finalDiets;
 };
 
-const joinMeals = (parsedMenu, lang) => {
+const joinMeals = (parsedMenu) => {
   let coursesArray = [];
-  if (parsedMenu.length < 1) {
 
-    if (lang === 'fi') {
-      coursesArray.push('Tälle päivälle ei löytynyt aterioita');
-    } else {
-      coursesArray.push('No meals were found for this day');
-    }
-  } else {
-    parsedMenu.forEach((setMenu) => {
+  parsedMenu.forEach((setMenu) => {
 
-      const meals = setMenu.Meals.map(x => x.Name).join(", ");
-      const course = {
-        price: setMenu.Price,
-        title: meals,
-        diets: filterDiets(setMenu)
-      };
-      coursesArray.push(course);
-    });
-  }
+    const meals = setMenu.Meals.map(x => x.Name).join(", ");
+    const course = {
+      price: setMenu.Price,
+      title: meals,
+      diets: filterDiets(setMenu)
+    };
+    coursesArray.push(course);
+  });
+
   return coursesArray;
 };
 
-const getDailyMenu = async (lang, date) => {
+const getDailyMenu = async (restaurantId, lang, date) => {
+  date = '2020-02-24';
 
   let dayOfTheWeek = new Date().getDay();
 
@@ -74,15 +65,16 @@ const getDailyMenu = async (lang, date) => {
   if (dayOfTheWeek === -1) {
     dayOfTheWeek = 6;
   }
-
+  //const weeklyUrlEn = `${fazerProxyUrl}/api/restaurant/menu/week?language=en`;
+  //${lang == 'fi' ? weeklyUrlFi : weeklyUrlEn}
   let weeklyMenu;
   try {
-    weeklyMenu = await fetchGet(`${lang == 'fi' ? weeklyUrlFi : weeklyUrlEn}${date}`);
+    weeklyMenu = await fetchGet(`${fazerProxyUrl}/api/restaurant/menu/week?language=${lang}&restaurantPageId=${restaurantId}&weekDate=${date}`);
   } catch (error) {
     throw new Error(error.message);
   }
   const dailyMenu = parseMenu(weeklyMenu, dayOfTheWeek);
-  const parsedDailyMeals = joinMeals(dailyMenu, lang);
+  const parsedDailyMeals = joinMeals(dailyMenu);
   return parsedDailyMeals;
 };
 
