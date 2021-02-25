@@ -2,6 +2,7 @@
 import SodexoData from './modules/sodexo-data';
 import FazerData from './modules/fazer-data';
 import './styles/main.scss';
+import HSLData from './modules/hsl-data';
 
 
 const today = new Date().toISOString().split('T')[0];
@@ -30,12 +31,12 @@ const restaurants = [
     id: 270540,
     type: FazerData
   },
-{
-  title: 'Sodexo Myyrmäki',
-  name: 'sodexo-myyrmaki',
-  id: 152,
-  type: SodexoData
-}];
+  {
+    title: 'Sodexo Myyrmäki',
+    name: 'sodexo-myyrmaki',
+    id: 152,
+    type: SodexoData
+  }];
 
 
 /**
@@ -134,6 +135,32 @@ const loadData = async () => {
 };
 
 
+const renderHSLData = (stop) => {
+  const stopElement = document.createElement('div');
+  stopElement.innerHTML = `<h3>Seuraavat vuorot pysäkiltä ${stop.name}</h3><ul>`;
+  for (const ride of stop.stoptimesWithoutPatterns) {
+    stopElement.innerHTML += `<li>${ride.trip.routeShortName},
+      ${ride.trip.tripHeadsign},
+      ${HSLData.formatTime(ride.scheduledDeparture)}</li>`;
+  }
+  stopElement.innerHTML += `</ul>`;
+  document.querySelector('.hsl-data-container').appendChild(stopElement);
+
+};
+
+
+const loadHSLData = async () => {
+  try {
+    const result = await HSLData.getDeparturesAndArrivalsByStopId(2132207);
+    const stop = result.data.stop;
+    renderHSLData(stop);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+
+
 const serviceWorker = () => {
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
@@ -160,6 +187,7 @@ const init = () => {
   loadData();
   modeToggle.addEventListener('change', switchTheme, false);
   languageBtn.addEventListener('click', switchLanguage);
+  loadHSLData();
 
   //serviceWorker();
 };
