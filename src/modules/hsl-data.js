@@ -2,7 +2,7 @@ import { fetchPostJson } from "./network";
 
 const apiUrl = 'https://api.digitransit.fi/routing/v1/routers/hsl/index/graphql';
 
-const getDeparturesAndArrivalsByStopId = async (id) => {
+/*const getDeparturesAndArrivalsByStopId = async (id) => {
   const query = `{
     stop(id: "HSL:${id}") {
       name
@@ -23,7 +23,40 @@ const getDeparturesAndArrivalsByStopId = async (id) => {
         }
       }
     };
-  }`;
+  }`; */
+
+  const getDeparturesAndArrivalsByLocation = async (lat, lon, distance) => {
+    const query = `{
+      nearest(lat: ${lat}, lon: ${lon}, maxDistance: ${distance}, filterByPlaceTypes: DEPARTURE_ROW) {
+        edges {
+          node {
+            place {
+              ...on DepartureRow {
+                stop {
+                  lat
+                  lon
+                  name
+                  code
+                }
+                stoptimes {
+                  serviceDay
+                  scheduledDeparture
+                  realtimeDeparture
+                  trip {
+                    route {
+                      shortName
+                      longName
+                    }
+                  }
+                  headsign
+                }
+              }
+            }
+            distance
+          }
+        }
+      }
+    }`;
 
   // TODO: add try-catch error handling
   return await fetchPostJson(apiUrl, 'application/graphql', query);
@@ -41,5 +74,5 @@ const formatTime = (seconds) => {
   return `${hours}:${minutes < 10 ? '0' + minutes : minutes}`;
 };
 
-const HSLData = {getDeparturesAndArrivalsByStopId, formatTime};
+const HSLData = { formatTime, getDeparturesAndArrivalsByLocation};
 export default HSLData;

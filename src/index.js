@@ -24,7 +24,8 @@ const restaurants = [
     title: 'Sodexo Myllypuro',
     name: 'sodexo-myllypuro',
     id: 158,
-    type: SodexoData
+    type: SodexoData,
+
   }, {
     title: 'Fazer Karaportti',
     name: 'fazer-kp',
@@ -118,6 +119,7 @@ const switchLanguage = () => {
   }
   updateUserSettings();
   loadData();
+  loadHSLData();
 };
 
 const loadData = async () => {
@@ -148,12 +150,77 @@ const renderHSLData = (stop) => {
 
 };
 
+const renderHSLDataLocation = (departures) => {
+  //TODO: poista jsonista 0 length -stoptimet
+  document.querySelector('.hsl-data-container').innerHTML = "";
+  const departureDiv = document.createElement('div');
+  departureDiv.classList.add('hsl-grid');
+
+  const gridTitles = document.createElement('div');
+  gridTitles.classList.add('grid-title');
+  const titlesArray = ['Linja', 'Paikka', 'Etäisyys', 'Pysäkki', 'Päätepysäkki'];
+  for (const title of titlesArray) {
+    const titleDiv = document.createElement('div');
+    titleDiv.innerHTML = title;
+    gridTitles.appendChild(titleDiv);
+  }
+  gridTitles.classList.add('week-names');
+  departureDiv.appendChild(gridTitles);
+
+  const gridTimes = document.createElement('div');
+  const gridContent = document.createElement('div');
+  gridContent.classList.add('grid-content');
+  gridTimes.classList.add('grid-time');
+  gridTimes.style.gridTemplateRows = `repeat(${Object.values(departures).length}, 1fr)`;
+  gridContent.style.gridTemplateRows = `repeat(${Object.values(departures).length}, 1fr)`;
+
+
+
+  for (const departure of departures) {
+    if (Object.values(departure.node.place.stoptimes).length > 0) {
+      const timeDiv = document.createElement('div');
+      timeDiv.innerHTML = HSLData.formatTime(departure.node.place.stoptimes[0].scheduledDeparture);
+      gridTimes.appendChild(timeDiv);
+
+      gridContent.innerHTML += `<div>${departure.node.place.stoptimes[0].trip.route.shortName}</div>
+   <div>${departure.node.place.stop.name}</div>
+   <div>${departure.node.distance} ${userSettings.lang == 'fi' ? 'metriä' : 'meters'}</div>
+   <div>${departure.node.place.stop.code}</div>
+   <div>${departure.node.place.stoptimes[0].headsign}</div>`;
+    }
+  }
+  departureDiv.appendChild(gridContent);
+  departureDiv.appendChild(gridTimes);
+
+  /*
+    departureDiv.innerHTML = `<h3>Seuraavat lähdöt Karaportin läheltä</h3><ul>`;
+
+    for (const departure of departures) {
+
+      if (Object.values(departure.node.place.stoptimes).length > 0) {
+        departureDiv.innerHTML += `<li>
+        ${HSLData.formatTime(departure.node.place.stoptimes[0].scheduledDeparture)}
+        ${departure.node.place.stoptimes[0].trip.route.shortName},
+        ${departure.node.place.stop.name},
+        ${departure.node.distance} ${userSettings.lang == 'fi' ? 'metriä' : 'meters'},
+        ${departure.node.place.stop.code},
+        ${departure.node.place.stoptimes[0].headsign},
+        </li>`;
+      }
+    }
+    departureDiv.innerHTML += `</ul>`;
+   */
+  document.querySelector('.hsl-data-container').appendChild(departureDiv);
+};
+
 
 const loadHSLData = async () => {
   try {
-    const result = await HSLData.getDeparturesAndArrivalsByStopId(2132207);
-    const stop = result.data.stop;
-    renderHSLData(stop);
+    const result = await HSLData.getDeparturesAndArrivalsByLocation(60.224200671262004, 24.758688330092166, 500);
+    const stop = result.data.nearest.edges;
+    console.log(stop);
+    //renderHSLData(stop);
+    renderHSLDataLocation(stop);
   } catch (error) {
     console.error(error);
   }
