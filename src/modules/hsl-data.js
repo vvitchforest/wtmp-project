@@ -25,8 +25,8 @@ const apiUrl = 'https://api.digitransit.fi/routing/v1/routers/hsl/index/graphql'
     };
   }`; */
 
-  const getDeparturesAndArrivalsByLocation = async (lat, lon, distance) => {
-    const query = `{
+const getDeparturesAndArrivalsByLocation = async (lat, lon, distance) => {
+  const query = `{
       nearest(lat: ${lat}, lon: ${lon}, maxDistance: ${distance}, filterByPlaceTypes: DEPARTURE_ROW) {
         edges {
           node {
@@ -59,7 +59,18 @@ const apiUrl = 'https://api.digitransit.fi/routing/v1/routers/hsl/index/graphql'
     }`;
 
   // TODO: add try-catch error handling
-  return await fetchPostJson(apiUrl, 'application/graphql', query);
+  try {
+    const hslData = await fetchPostJson(apiUrl, 'application/graphql', query);
+    const departures = hslData.data.nearest.edges;
+
+    const sortedDepartures = departures.filter((departure) => Object.values(departure.node.place.stoptimes).length > 0);
+    sortedDepartures.sort((a, b) => a.node.place.stoptimes[0].scheduledDeparture - b.node.place.stoptimes[0].scheduledDeparture);
+
+    return sortedDepartures;
+
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 /**
@@ -71,8 +82,8 @@ const apiUrl = 'https://api.digitransit.fi/routing/v1/routers/hsl/index/graphql'
 const formatTime = (seconds) => {
   const hours = Math.floor(seconds / 3600);
   const minutes = Math.floor(seconds / 60) - (hours * 60);
-  return `${hours}:${minutes < 10 ? '0' + minutes : minutes}`;
+  return `${hours == 24 ? '00' : hours}:${minutes < 10 ? '0' + minutes : minutes}`;
 };
 
-const HSLData = { formatTime, getDeparturesAndArrivalsByLocation};
+const HSLData = { formatTime, getDeparturesAndArrivalsByLocation };
 export default HSLData;

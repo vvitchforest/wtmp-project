@@ -6,8 +6,7 @@ console.log(date);*/
 import { fazerProxyUrl } from "../settings";
 import { fetchGet } from './network';
 
-const weeklyUrlFi = `${fazerProxyUrl}/api/restaurant/menu/week?language=fi`;
-const weeklyUrlEn = `${fazerProxyUrl}/api/restaurant/menu/week?language=en`;
+const imageUrl = './assets/images/fazer.png';
 
 const parseMenu = (weeklyMenu, dayOfTheWeek) => {
   let meals = [];
@@ -15,6 +14,10 @@ const parseMenu = (weeklyMenu, dayOfTheWeek) => {
     meals.push(setMenu);
   });
   return meals;
+};
+
+const getRestaurantLogo = () => {
+  return imageUrl;
 };
 
 const filterDiets = (setMenu) => {
@@ -25,14 +28,12 @@ const filterDiets = (setMenu) => {
       tbaDiets.push(diet);
     }
   }
-
   const count = (array, search) => array.reduce((n, x) => n + (x === search), 0);
   for (const Diet of tbaDiets) {
     if (count(tbaDiets, Diet) === Object.values(setMenu.Meals).length) {
       commonDiets.push(Diet);
     }
   }
-
   const finalDiets = commonDiets.filter((value, index, self) => {
     return self.indexOf(value) === index;
   });
@@ -56,6 +57,22 @@ const joinMeals = (parsedMenu) => {
   return coursesArray;
 };
 
+const getWeeklyMenu = async (restaurantId, lang, date) => {
+  date = '2020-02-24';
+
+
+  let weeklyMenu;
+  try {
+    weeklyMenu = await fetchGet(`${fazerProxyUrl}/api/restaurant/menu/week?language=${lang}&restaurantPageId=${restaurantId}&weekDate=${date}`);
+  } catch (error) {
+    throw new Error(error.message);
+  }
+  const dailyMenu = parseMenu(weeklyMenu, dayOfTheWeek);
+  const parsedDailyMeals = joinMeals(dailyMenu);
+  return parsedDailyMeals;
+};
+
+
 const getDailyMenu = async (restaurantId, lang, date) => {
   date = '2020-02-24';
 
@@ -65,6 +82,7 @@ const getDailyMenu = async (restaurantId, lang, date) => {
   if (dayOfTheWeek === -1) {
     dayOfTheWeek = 6;
   }
+  dayOfTheWeek = 4;
   //const weeklyUrlEn = `${fazerProxyUrl}/api/restaurant/menu/week?language=en`;
   //${lang == 'fi' ? weeklyUrlFi : weeklyUrlEn}
   let weeklyMenu;
@@ -78,6 +96,6 @@ const getDailyMenu = async (restaurantId, lang, date) => {
   return parsedDailyMeals;
 };
 
-const FazerData = { getDailyMenu };
+const FazerData = { getDailyMenu, getRestaurantLogo };
 
 export default FazerData;

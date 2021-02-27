@@ -1,15 +1,13 @@
 
 import SodexoData from './modules/sodexo-data';
 import FazerData from './modules/fazer-data';
+import Modal from './modules/modal';
 import './styles/main.scss';
 import HSLData from './modules/hsl-data';
 
 
 const today = new Date().toISOString().split('T')[0];
 console.log(today);
-
-//let languageSetting = 'fi';
-
 
 const languageBtn = document.querySelector('#menu-language-btn');
 const modeToggle = document.getElementById('checkbox');
@@ -38,7 +36,6 @@ const restaurants = [
     id: 152,
     type: SodexoData
   }];
-
 
 /**
  * Updates user settings
@@ -69,27 +66,45 @@ const switchTheme = (event) => {
 const createRestaurantCards = (restaurants) => {
   const cardContainer = document.querySelector('.menu-cards-container');
   cardContainer.innerHTML = "";
+
   for (const restaurant of restaurants) {
     const restaurantCard = document.createElement('article');
     restaurantCard.classList.add('menu-card');
 
     const cardHeader = document.createElement('div');
     cardHeader.classList.add('menu-card-header');
+    //cardHeader.innerHTML = restaurant.title;
+
+    const cardImgContainer = document.createElement('div');
+    cardImgContainer.classList.add('menu-card-img-container');
+    const image = document.createElement('img');
+    image.src = restaurant.type.getRestaurantLogo();
+    image.id = restaurant.name + '-img-id';
+
+    const cardTitle = document.createElement('h2');
+    cardTitle.innerHTML = restaurant.title;
 
     const cardContent = document.createElement('div');
     cardContent.classList.add('menu-card-content');
     cardContent.id = restaurant.name;
 
+    cardImgContainer.appendChild(image);
+    cardHeader.appendChild(cardImgContainer);
+    cardHeader.appendChild(cardTitle);
     restaurantCard.appendChild(cardHeader);
     restaurantCard.appendChild(cardContent);
     cardContainer.appendChild(restaurantCard);
+
+    Modal.setModalControls(image.id);
   }
 };
+
 
 
 const fillMenuCard = (menu, restaurant) => {
   const cardContent = document.querySelector(`#${restaurant.name}`);
   cardContent.innerHTML = "";
+
   const menuList = document.createElement('ul');
   menuList.classList.add('menu-list');
 
@@ -98,12 +113,13 @@ const fillMenuCard = (menu, restaurant) => {
     listItem.innerHTML = course.title + ", " + course.price + ", " + course.diets;
     menuList.appendChild(listItem);
   });
+
   cardContent.appendChild(menuList);
 };
 
 const noDataNotification = (message, restaurant) => {
   const cardContent = document.querySelector('#' + restaurant);
-  cardContent.innerHTML = `<p>${message}</p>`;
+  cardContent.innerHTML += `<p>${message}</p>`;
 };
 
 
@@ -136,7 +152,6 @@ const loadData = async () => {
   }
 };
 
-
 const renderHSLData = (stop) => {
   const stopElement = document.createElement('div');
   stopElement.innerHTML = `<h3>Seuraavat vuorot pysäkiltä ${stop.name}</h3><ul>`;
@@ -147,11 +162,10 @@ const renderHSLData = (stop) => {
   }
   stopElement.innerHTML += `</ul>`;
   document.querySelector('.hsl-data-container').appendChild(stopElement);
-
 };
 
 const renderHSLDataLocation = (departures) => {
-  //TODO: poista jsonista 0 length -stoptimet
+
   document.querySelector('.hsl-data-container').innerHTML = "";
   const departureDiv = document.createElement('div');
   departureDiv.classList.add('hsl-grid');
@@ -174,20 +188,17 @@ const renderHSLDataLocation = (departures) => {
   gridTimes.style.gridTemplateRows = `repeat(${Object.values(departures).length}, 1fr)`;
   gridContent.style.gridTemplateRows = `repeat(${Object.values(departures).length}, 1fr)`;
 
-
-
   for (const departure of departures) {
-    if (Object.values(departure.node.place.stoptimes).length > 0) {
-      const timeDiv = document.createElement('div');
-      timeDiv.innerHTML = HSLData.formatTime(departure.node.place.stoptimes[0].scheduledDeparture);
-      gridTimes.appendChild(timeDiv);
+    const timeDiv = document.createElement('div');
+    timeDiv.innerHTML = HSLData.formatTime(departure.node.place.stoptimes[0].scheduledDeparture);
+    gridTimes.appendChild(timeDiv);
 
-      gridContent.innerHTML += `<div>${departure.node.place.stoptimes[0].trip.route.shortName}</div>
+    gridContent.innerHTML += `<div>${departure.node.place.stoptimes[0].trip.route.shortName}</div>
    <div>${departure.node.place.stop.name}</div>
    <div>${departure.node.distance} ${userSettings.lang == 'fi' ? 'metriä' : 'meters'}</div>
    <div>${departure.node.place.stop.code}</div>
    <div>${departure.node.place.stoptimes[0].headsign}</div>`;
-    }
+
   }
   departureDiv.appendChild(gridContent);
   departureDiv.appendChild(gridTimes);
@@ -217,15 +228,13 @@ const renderHSLDataLocation = (departures) => {
 const loadHSLData = async () => {
   try {
     const result = await HSLData.getDeparturesAndArrivalsByLocation(60.224200671262004, 24.758688330092166, 500);
-    const stop = result.data.nearest.edges;
     console.log(stop);
     //renderHSLData(stop);
-    renderHSLDataLocation(stop);
+    renderHSLDataLocation(result);
   } catch (error) {
     console.error(error);
   }
 };
-
 
 
 const serviceWorker = () => {
@@ -250,6 +259,7 @@ const init = () => {
       modeToggle.checked = true;
     }
   }
+
   createRestaurantCards(restaurants);
   loadData();
   modeToggle.addEventListener('change', switchTheme, false);

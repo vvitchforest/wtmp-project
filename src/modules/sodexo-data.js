@@ -1,6 +1,7 @@
 
 import { fetchGet } from './network';
 const dailyUrl = `https://www.sodexo.fi/ruokalistat/output/daily_json`;
+const imageUrl = './assets/images/sodexo.jpg';
 
 /**
  * Parses course arrays from Sodexo menu
@@ -34,6 +35,10 @@ const parseSodexoMenu = (sodexoMenu) => {
   return { fi: coursesFi, en: coursesEn };
 };
 
+const getRestaurantLogo = () => {
+  return imageUrl;
+};
+
 const getDailyMenu = async (restaurantId, lang, date) => {
   let menuData;
   try {
@@ -45,5 +50,5 @@ const getDailyMenu = async (restaurantId, lang, date) => {
   return (lang === 'fi') ? parsedMenu.fi : parsedMenu.en;
 };
 
-const SodexoData = { getDailyMenu };
+const SodexoData = { getDailyMenu, getRestaurantLogo };
 export default SodexoData;
