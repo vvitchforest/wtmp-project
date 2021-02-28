@@ -25,25 +25,39 @@ openModalImgBtn.addEventListener('click', modalOpen);
       modalClose();
     }
   });*/
-  const renderModalContent = (weeksMenu) => {
-    const modal = document.getElementById('myModal');
-    const modalParagraph = document.createElement('p');
 
+
+
+
+
+  const renderModalContent = async (fetchResult) => {
+    const weeklyMenu = await fetchResult;
+    console.log(weeklyMenu);
+    const modal = document.getElementById('myModal');
+    const modalContent = document.querySelector('.modal-content');
+    const modalParagraph = document.createElement('p');
+    modalParagraph.innerHTML += `<h3>Viikko ${weeklyMenu.WeekNumber}</h3><br>`;
+
+    for(const day of weeklyMenu.DailyMenus) {
+      modalParagraph.innerHTML += `<br>${day.day} ${day.date}<br><br>`;
+      for(const course of day.courses) {
+        modalParagraph.innerHTML += `${course}<br>`;
+      }
+      modalParagraph.innerHTML += `<br>`;
+    }
+    modalContent.innerHTML = "";
     modalContent.appendChild(modalParagraph);
     modal.appendChild(modalContent);
 
   };
 
-  const setModalControls = (triggerId) => {
+  const setModalControls = (triggerId, modalId) => {
     // Get the modal
-    const modal = document.getElementById('myModal');
+    const modal = document.getElementById(modalId);
     // Get the button that opens the modal
     const btn = document.getElementById(triggerId);
     // Get the <span> element that closes the modal
     const span = document.getElementsByClassName("close")[0];
-
-    const modalParagraph = document.querySelectorAll('.modal-content p');
-
     // When the user clicks on the button, open the modal
     btn.addEventListener('click', () => {
       modal.style.display = "block";
@@ -59,5 +73,7 @@ openModalImgBtn.addEventListener('click', modalOpen);
       }
     });
   };
+
+
   const Modal = {setModalControls, renderModalContent};
   export default Modal;

@@ -4,13 +4,18 @@ import FazerData from './modules/fazer-data';
 import Modal from './modules/modal';
 import './styles/main.scss';
 import HSLData from './modules/hsl-data';
+import announcementData from './modules/announcement';
+import Announcement from './modules/announcement';
 
 
 const today = new Date().toISOString().split('T')[0];
 console.log(today);
 
 const languageBtn = document.querySelector('#menu-language-btn');
+const infoBtn = document.querySelector('#info-btn');
 const modeToggle = document.getElementById('checkbox');
+const announcementModal = document.getElementById('announcement-modal');
+const menuModal = document.getElementById('myModal');
 
 let userSettings = {
   colorTheme: 'light',
@@ -95,11 +100,16 @@ const createRestaurantCards = (restaurants) => {
     restaurantCard.appendChild(cardContent);
     cardContainer.appendChild(restaurantCard);
 
-    Modal.setModalControls(image.id);
+    Modal.setModalControls(image.id, menuModal.id);
+
+    if (restaurant.type === FazerData) {
+      document.getElementById(image.id).addEventListener('click', () => {
+        const weeklyMenu = loadWeeklyData(restaurant);
+        Modal.renderModalContent(weeklyMenu);
+      });
+    }
   }
 };
-
-
 
 const fillMenuCard = (menu, restaurant) => {
   const cardContent = document.querySelector(`#${restaurant.name}`);
@@ -138,8 +148,19 @@ const switchLanguage = () => {
   loadHSLData();
 };
 
-const loadData = async () => {
+const loadWeeklyData = async (restaurant) => {
+  let weeklyMenu;
+  try {
+    weeklyMenu = await FazerData.getWeeklyMenu(restaurant.id, userSettings.lang, today);
+  }
+  catch (error) {
+    console.error(error);
+    noDataNotification(`${userSettings.lang == 'fi' ? 'Tälle päivälle ei löytynyt aterioita' : 'No meals were found for this day'}`, restaurant.name);
+  }
+  return weeklyMenu;
+};
 
+const loadData = async () => {
   for (const restaurant of restaurants) {
     try {
       const parsedMenu = await restaurant.type.getDailyMenu(restaurant.id, userSettings.lang, today);
@@ -236,7 +257,6 @@ const loadHSLData = async () => {
   }
 };
 
-
 const serviceWorker = () => {
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
@@ -264,6 +284,8 @@ const init = () => {
   loadData();
   modeToggle.addEventListener('change', switchTheme, false);
   languageBtn.addEventListener('click', switchLanguage);
+  infoBtn.addEventListener('click', Announcement.renderSlides);
+  Modal.setModalControls(infoBtn.id, announcementModal.id);
   loadHSLData();
 
   //serviceWorker();

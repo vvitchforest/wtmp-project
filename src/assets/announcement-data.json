@@ -1,0 +1,152 @@
+[
+  {
+    "id": "01",
+    "name": "slide1",
+    "image": "./assets/images/announcement-imgs/Slide1.JPG"
+  },
+
+  {
+    "id": "02",
+    "name": "slide2",
+    "image": "./assets/images/announcement-imgs/Slide2.JPG"
+  },
+
+  {
+    "id": "03",
+    "name": "slide3",
+    "image": "./assets/images/announcement-imgs/Slide3.JPG"
+  },
+
+  {
+    "id": "04",
+    "name": "slide4",
+    "image": "./assets/images/announcement-imgs/Slide4.JPG"
+  },
+
+  {
+    "id": "05",
+    "name": "slide5",
+    "image": "./assets/images/announcement-imgs/Slide5.JPG"
+  },
+
+  {
+    "id": "06",
+    "name": "slide6",
+    "image": "./assets/images/announcement-imgs/Slide6.JPG"
+  },
+
+  {
+    "id": "07",
+    "name": "slide7",
+    "image": "./assets/images/announcement-imgs/Slide7.JPG"
+  },
+
+  {
+    "id": "08",
+    "name": "slide8",
+    "image": "./assets/images/announcement-imgs/Slide8.JPG"
+  },
+
+  {
+    "id": "09",
+    "name": "slide9",
+    "image": "./assets/images/announcement-imgs/Slide9.JPG"
+  },
+
+  {
+    "id": "10",
+    "name": "slide10",
+    "image": "./assets/images/announcement-imgs/Slide10.JPG"
+  },
+
+  {
+    "id": "11",
+    "name": "slide111",
+    "image": "./assets/images/announcement-imgs/Slide11.JPG"
+  },
+
+  {
+    "id": "12",
+    "name": "slide12",
+    "image": "./assets/images/announcement-imgs/Slide12.JPG"
+  },
+
+  {
+    "id": "13",
+    "name": "slide13",
+    "image": "./assets/images/announcement-imgs/Slide13.JPG"
+  },
+
+  {
+    "id": "14",
+    "name": "slide14",
+    "image": "./assets/images/announcement-imgs/Slide14.JPG"
+  },
+
+  {
+    "id": "15",
+    "name": "slide15",
+    "image": "./assets/images/announcement-imgs/Slide15.JPG"
+  },
+
+  {
+    "id": "16",
+    "name": "slide16",
+    "image": "./assets/images/announcement-imgs/Slide16.JPG"
+  },
+
+  {
+    "id": "17",
+    "name": "slide17",
+    "image": "./assets/images/announcement-imgs/Slide17.JPG"
+  },
+
+  {
+    "id": "18",
+    "name": "slide18",
+    "image": "./assets/images/announcement-imgs/Slide18.JPG"
+  },
+
+  {
+    "id": "19",
+    "name": "slide19",
+    "image": "./assets/images/announcement-imgs/Slide19.JPG"
+  },
+
+  {
+    "id": "20",
+    "name": "slide20",
+    "image": "./assets/images/announcement-imgs/Slide20.JPG"
+  },
+
+  {
+    "id": "21",
+    "name": "slide21",
+    "image": "./assets/images/announcement-imgs/Slide21.JPG"
+  },
+
+  {
+    "id": "22",
+    "name": "slide22",
+    "image": "./assets/images/announcement-imgs/Slide22.JPG"
+  },
+
+  {
+    "id": "23",
+    "name": "slide23",
+    "image": "./assets/images/announcement-imgs/Slide23.JPG"
+  },
+
+  {
+    "id": "24",
+    "name": "slide24",
+    "image": "./assets/images/announcement-imgs/Slide24.JPG"
+  },
+
+  {
+    "id": "25",
+    "name": "slide25",
+    "image": "./assets/images/announcement-imgs/Slide25.JPG"
+  }
+
+]

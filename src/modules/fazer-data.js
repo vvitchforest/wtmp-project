@@ -6,17 +6,43 @@ console.log(date);*/
 import { fazerProxyUrl } from "../settings";
 import { fetchGet } from './network';
 
-const imageUrl = './assets/images/fazer.png';
-
 const parseMenu = (weeklyMenu, dayOfTheWeek) => {
-  let meals = [];
+  let setmenus = [];
   weeklyMenu.LunchMenus[dayOfTheWeek].SetMenus.forEach((setMenu) => {
-    meals.push(setMenu);
+    setmenus.push(setMenu);
   });
-  return meals;
+  return setmenus;
+};
+
+const parseWeeklyMenu = (weeklyMenu) => {
+  let setmenus = [];
+  let parsedWeeklyMenu = {
+    WeekNumber: weeklyMenu.WeekNumber,
+    DailyMenus: setmenus
+  };
+
+  weeklyMenu.LunchMenus.forEach((lunchMenu) => {
+    let coursesArray = [];
+
+    let weekDay = {
+      day: lunchMenu.DayOfWeek,
+      date: lunchMenu.Date,
+      price: "",
+      courses: coursesArray,
+    };
+
+    lunchMenu.SetMenus.forEach((setMenu) => {
+      const meals = setMenu.Meals.map(x => x.Name).join(", ") + ` (${filterDiets(setMenu)})`;
+      coursesArray.push(meals);
+      weekDay.price = setMenu.Price;
+    });
+    setmenus.push(weekDay);
+  });
+  return parsedWeeklyMenu;
 };
 
 const getRestaurantLogo = () => {
+  const imageUrl = './assets/images/fazer.png';
   return imageUrl;
 };
 
@@ -60,18 +86,14 @@ const joinMeals = (parsedMenu) => {
 const getWeeklyMenu = async (restaurantId, lang, date) => {
   date = '2020-02-24';
 
-
   let weeklyMenu;
   try {
     weeklyMenu = await fetchGet(`${fazerProxyUrl}/api/restaurant/menu/week?language=${lang}&restaurantPageId=${restaurantId}&weekDate=${date}`);
   } catch (error) {
     throw new Error(error.message);
   }
-  const dailyMenu = parseMenu(weeklyMenu, dayOfTheWeek);
-  const parsedDailyMeals = joinMeals(dailyMenu);
-  return parsedDailyMeals;
+  return parseWeeklyMenu(weeklyMenu);
 };
-
 
 const getDailyMenu = async (restaurantId, lang, date) => {
   date = '2020-02-24';
@@ -96,6 +118,6 @@ const getDailyMenu = async (restaurantId, lang, date) => {
   return parsedDailyMeals;
 };
 
-const FazerData = { getDailyMenu, getRestaurantLogo };
+const FazerData = { getDailyMenu, getRestaurantLogo, getWeeklyMenu };
 
 export default FazerData;
