@@ -20,24 +20,20 @@ body {
 
 /*BANNER*/
 
-.banner {
+#landing-page {
   display: flex;
   height: 92vh;
-}
-
-.banner-img-container {
   background-color: var(--bg-color);
   width: 100%;
   position: relative;
-  display: flex;
 }
 
-#left {
+#landing-page-left {
   flex: 1;
   position: relative;
 }
 
-#right{
+#landing-page-right{
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -49,7 +45,7 @@ body {
 @import 'themeswitch';
 @import 'restaurants';
 
-.banner-title {
+#main-title {
   position: absolute;
   top: 15%;
   left: 15%;
@@ -57,16 +53,16 @@ body {
   color: var(--heading-color);
 }
 
-.banner-title > h1 {
+#main-title > h1 {
   font-size: $h1-size;
   letter-spacing: 0.05em;
 }
 
-.banner-title > h2 {
+#main-title > h2 {
   font-size: $h2-size;
 }
 
-.banner-title > p {
+#main-title > p {
   font-size: $p-large;
 }
 

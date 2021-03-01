@@ -40,7 +40,8 @@ const restaurants = [
     name: 'sodexo-myyrmaki',
     id: 152,
     type: SodexoData
-  }];
+  },
+];
 
 /**
  * Updates user settings

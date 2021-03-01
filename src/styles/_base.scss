@@ -10,6 +10,7 @@ $charcoal: #343A40;
 $dusk: #252032;
 $dark: #0d1117;
 $black: #000000;
+$hsl-pink: #ef99bc;
 
 /*Colours need to be converted to CSS variables, because switching to dark theme doesn't work with SASS variables*/
 :root {
@@ -36,8 +37,15 @@ $h1-size: 4em;
 $h2-size: 3em;
 $h3-size: 2em;
 $p-large: 2em;
+$p-medium: 1.5em;
 $p-regular: 1em;
 
+/*SPACING*/
+$sp1: 0.25em;
+$sp2: 0.50em;
+$sp3: 1.25em;
+$sp4: 1.50em;
+$sp5: 1.75em;
 
 
 
