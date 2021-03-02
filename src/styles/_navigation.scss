@@ -9,56 +9,47 @@
   border-bottom: 1px solid $greymist;
   padding: 0 4em;
   position: relative;
-}
-
-
 
   img {
     height: 70px;
     padding-top: 0.5em;
   }
 
-  .nav-items {
-
-    display: flex;
-    align-items: center;
-    list-style: none;
-  }
-
-  .nav-items a {
-    font-size: $p-medium;
-    padding: 0.5em;
-    text-decoration: none;
-    border-radius: 0.25em;
-    color: var(--text-color);
-  }
-
-  .mobile-icon-container {
+  & .mobile-icon-container {
     display: none;
   }
 
-  @media screen and (max-width: $mobile) {
+  .nav-items {
+    display: flex;
+    align-items: center;
+    list-style: none;
 
-    .topnav {
-    width: 100vw;
-    height: 8vh;
+    & a {
+      font-size: $p-medium;
+      padding: 0.5em;
+      text-decoration: none;
+      border-radius: 0.25em;
+      color: var(--text-color);
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .topnav {
     padding: 0 2em;
 
+    img {
+      height: 50px;
     }
-
 
     .nav-items {
       flex-direction: column;
-
-
-
+      a {
+        display: none;
+      }
     }
 
-    a {
-      display: none;
-    }
-
-    .mobile-icon-container {
+    & .mobile-icon-container {
       background: var(--nav-color);
       color: black;
       display: block;
@@ -67,9 +58,7 @@
       right: 2em;
     }
 
-
-
-    .topnav.mobile {
+    &.mobile {
       height: auto;
       padding-bottom: 1em;
       position: absolute;
@@ -83,22 +72,16 @@
       justify-content: center;
     }
 
-    .topnav.mobile #logo-container {
+    &.mobile #logo-container {
       align-self: flex-start;
     }
 
-    .topnav.mobile a {
+    &.topnav.mobile a {
       display: inline-block;
       font-size: 1em;
     }
-
-    .banner.mobile {
-      margin-top: 8vh;
-    }
-
-    .nav-items.mobile {
-      margin-top: 8vh;
-
-    }
   }
-
+}
+.banner.mobile {
+  margin-top: 8vh;
+}
