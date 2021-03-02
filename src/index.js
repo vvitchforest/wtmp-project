@@ -200,7 +200,7 @@ const renderHSLDataLocation = (departures) => {
     titleDiv.innerHTML = title;
     gridTitles.appendChild(titleDiv);
   }
-  gridTitles.classList.add('week-names');
+  gridTitles.classList.add('grid-titles');
   departureDiv.appendChild(gridTitles);
 
   const gridTimes = document.createElement('div');
@@ -272,6 +272,25 @@ const serviceWorker = () => {
 
 
 const init = () => {
+
+
+  document.querySelector('.mobile-icon-container').addEventListener('click', () => {
+    const topNav = document.querySelector('.topnav');
+    const navList = document.querySelector('.nav-items');
+    const banner = document.querySelector('.banner');
+    if (topNav.className === 'topnav') {
+      topNav.className += ' mobile';
+      navList.className += ' mobile';
+      banner.className += ' mobile';
+
+    } else {
+      topNav.className = 'topnav';
+      navList.className = 'nav-items';
+      banner.className = 'banner';
+    }
+  });
+
+
   //Load from local storage if exists or use default user settings
   if (localStorage.getItem('userConfig')) {
     userSettings = JSON.parse(localStorage.getItem("userConfig"));

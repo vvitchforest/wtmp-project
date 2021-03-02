@@ -3,6 +3,7 @@
 
 <head>
   <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>
     <%= htmlWebpackPlugin.options.title %>
   </title>
@@ -10,7 +11,7 @@
 
 <body>
   <!--NABVAR-->
-  <nav class=topnav>
+  <nav class="topnav" >
     <div id="logo-container">
       <img src="./assets/icons/logo.svg">
     </div>
@@ -19,9 +20,16 @@
       <li><a href="#">Ruokalistat</a></li>
       <li><a href="#">Liikenneyhteydet</a></li>
     </ul>
+    <div class="mobile-icon-container">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="ionicon" viewBox="0 0 512 512">
+        <title>Menu</title>
+        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32"
+          d="M80 160h352M80 256h352M80 352h352" />
+      </svg>
+    </div>
   </nav>
   <!--LANDING PAGE-->
-  <section id="landing-page">
+  <section id="landing-page" class="banner">
     <div id="landing-page-left">
       <header id="main-title">
         <h1>Metropolia Info</h1>

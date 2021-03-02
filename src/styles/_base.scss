@@ -20,6 +20,7 @@ $hsl-pink: #ef99bc;
   --card-color: #{$white};
   --nav-color: #{$white};
   --heading-color: #{$black};
+  --border-color: #{$white};
 }
 
 /*DARK THEME*/
@@ -30,7 +31,13 @@ $hsl-pink: #ef99bc;
   --card-color: #{$dusk};
   --nav-color: #{$dusk};
   --heading-color: #{$lightgrey};
+  --border-color: #{$greymist};
 }
+
+
+/*BREAKPOINTS*/
+
+$mobile: 768px;
 
 /*FONTS*/
 $h1-size: 4em;
@@ -46,8 +53,5 @@ $sp2: 0.50em;
 $sp3: 1.25em;
 $sp4: 1.50em;
 $sp5: 1.75em;
-
-
-
 
 $card-border-radius: 0.5em;

@@ -18,8 +18,6 @@
   background-color: $dusk;
 }
 
-
-
 #transport-header img {
   height: 200px;
   width: 200px;
@@ -32,7 +30,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: white;
+  color: $white;
 }
 
 #transport-header h2 {
@@ -43,68 +41,25 @@
   font-size: $p-large;
 }
 
-
-
-
-$accent-base: #8eeec0;
-$cutty-sark: #546E7A;
-$porcelain: #ECEFF1;
-$accents: (
-  pink: adjust-hue($accent-base, -180%),
-  orange: adjust-hue($accent-base, -120%),
-  green: adjust-hue($accent-base, -60%),
-  cyan: $accent-base,
-  blue: adjust-hue($accent-base, 60%),
-  purple: adjust-hue($accent-base, 120%),
-);
-
-@function make-gradient($color){
-  @return linear-gradient(135deg, $color, adjust-hue($color, 40%));
-}
-
-@mixin make-tiles{
-  @each $name, $value in $accents{
-    .accent-#{$name}-gradient{
-      display: flex;
-      width: 100%;
-      height: 100%;
-      background: make-gradient($value);
-      transition: .2s ease box-shadow, .2s ease transform;
-      &:hover{
-        box-shadow: 0 20px 30px 0 transparentize($value, 0.7);
-        transform: scale(1.05);
-      }
-    }
-  }
-}
-
-html, body{
-  margin: 0;
-  font-family: 'Karla';
-  color: $cutty-sark;
-}
-
-*{
-  box-sizing: border-box;
-}
-
+/*GRID*/
 .hsl-grid{
-  @include make-tiles;
   display: grid;
-  grid-template-areas: ". week"
+  grid-template-areas: ". departures"
                        "time content";
   grid-template-columns: 120px;
   grid-template-rows: 60px;
-  width: 100vw;
-  height: 100vh;
-  .weekend {
-    background: lighten($porcelain, 5%);
-    color: lighten($cutty-sark, 20%);
-  }
-  .week-names{
-    grid-area: week;
+  width: 40vw;
+  height: 70vh;
+  margin: 2em 0;
+  background-color: var(--card-color);
+  color: var(--text-color);
+  box-shadow: var(--shadow);
+  border-radius: $card-border-radius;
+
+  .grid-titles{
+    grid-area: departures;
     display: grid;
-    // 7 days a week
+    // 5 titles
     grid-template-columns: repeat(5, 1fr);
     text-transform: uppercase;
     font-size: 12px;
@@ -114,14 +69,11 @@ html, body{
       justify-content: center;
       width: 100%;
       height: 100%;
-      box-shadow: inset 1px 0 0 $porcelain;
     }
   }
   .grid-time{
     grid-area: time;
     display: grid;
-    // 6 time intervals
-
     font-size: 14px;
     & > div{
       display: flex;
@@ -129,7 +81,7 @@ html, body{
       justify-content: center;
       width: 100%;
       height: 100%;
-      box-shadow: inset 0 1px 0 0 $porcelain;
+      box-shadow: inset 0 1px 0 0 $greymist;
     }
   }
   .grid-content{
@@ -138,7 +90,14 @@ html, body{
 
     grid-template-columns: repeat(5, 1fr);
     & > div{
-       box-shadow: inset 1px 0 0 $porcelain, inset 0 1px 0 0 $porcelain;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+       box-shadow: inset 1px 0 0 $greymist, inset 0 1px 0 0 $greymist;
+
     }
+
   }
 }
