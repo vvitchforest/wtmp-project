@@ -1,4 +1,7 @@
 import { fetchPostJson } from "./network";
+const moment = require('moment');
+const momentRange = require('moment-range');
+momentRange.extendMoment(moment);
 
 const apiUrl = 'https://api.digitransit.fi/routing/v1/routers/hsl/index/graphql';
 
@@ -64,9 +67,10 @@ const getDeparturesAndArrivalsByLocation = async (lat, lon, distance) => {
     const departures = hslData.data.nearest.edges;
 
     const sortedDepartures = departures.filter((departure) => Object.values(departure.node.place.stoptimes).length > 0);
-    sortedDepartures.sort((a, b) => a.node.place.stoptimes[0].scheduledDeparture - b.node.place.stoptimes[0].scheduledDeparture);
+    const departuresWithinXHours = sortedDepartures.filter((departure) => checkTimeWindow(departure.node.place.stoptimes[0].serviceDay + departure.node.place.stoptimes[0].scheduledDeparture));
+    departuresWithinXHours.sort((a, b) => a.node.place.stoptimes[0].scheduledDeparture - b.node.place.stoptimes[0].scheduledDeparture);
 
-    return sortedDepartures;
+    return departuresWithinXHours;
 
   } catch (error) {
     console.error(error);
@@ -82,7 +86,20 @@ const getDeparturesAndArrivalsByLocation = async (lat, lon, distance) => {
 const formatTime = (seconds) => {
   const hours = Math.floor(seconds / 3600);
   const minutes = Math.floor(seconds / 60) - (hours * 60);
-  return `${hours == 24 ? '00' : hours}:${minutes < 10 ? '0' + minutes : minutes}`;
+  return `${hours >= 24 ? (hours - 24) : hours}:${minutes < 10 ? '0' + minutes : minutes}`;
+};
+
+const checkTimeWindow = (departureUnix) => {
+  const currentTime = moment.unix(moment.now() / 1000).format('YYYY-MM-DD h:mm a');
+  const hoursFromNow = moment.unix(moment.now() / 1000 + (6 * 60 * 60)).format('YYYY-MM-DD h:mm a');
+  const departure = moment.unix(departureUnix).format('YYYY-MM-DD h:mm a');
+
+  const startMoment = moment(currentTime, 'YYYY-MM-DD h:mm a');
+  const hoursFromNowMoment = moment(hoursFromNow, 'YYYY-MM-DD h:mm a');
+  const departureMoment = moment(departure, 'YYYY-MM-DD h:mm a');
+
+  const range = moment.range(startMoment, hoursFromNowMoment);
+  return departureMoment.within(range);
 };
 
 const HSLData = { formatTime, getDeparturesAndArrivalsByLocation };

@@ -5,7 +5,9 @@
 }
 
 .hsl-data-container {
+  width: 80%;
   display: flex;
+  justify-content: center;
 }
 
 #transport-header {
@@ -46,10 +48,8 @@
   display: grid;
   grid-template-areas: ". departures"
                        "time content";
-  grid-template-columns: 120px;
+  grid-template-columns: 60px;
   grid-template-rows: 60px;
-  width: 40vw;
-  height: 70vh;
   margin: 2em 0;
   background-color: var(--card-color);
   color: var(--text-color);
@@ -60,7 +60,7 @@
     grid-area: departures;
     display: grid;
     // 5 titles
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: 1fr 2fr 2fr 3fr;
     text-transform: uppercase;
     font-size: 12px;
     & > div{
@@ -88,7 +88,7 @@
     grid-area: content;
     display: grid;
 
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: 1fr 2fr 2fr 3fr;
     & > div{
       display: flex;
       align-items: center;

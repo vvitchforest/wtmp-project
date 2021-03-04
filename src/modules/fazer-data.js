@@ -84,7 +84,7 @@ const joinMeals = (parsedMenu) => {
 };
 
 const getWeeklyMenu = async (restaurantId, lang, date) => {
-  date = '2020-02-24';
+
 
   let weeklyMenu;
   try {
@@ -96,7 +96,7 @@ const getWeeklyMenu = async (restaurantId, lang, date) => {
 };
 
 const getDailyMenu = async (restaurantId, lang, date) => {
-  date = '2020-02-24';
+
 
   let dayOfTheWeek = new Date().getDay();
 

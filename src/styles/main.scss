@@ -1,3 +1,4 @@
+
 @import 'base';
 
 * {
@@ -14,77 +15,138 @@ html, body {
 
 body {
   background-color: var(--bg-color);
+  letter-spacing: $letter-spacing;
+  font-family: 'Poppins', sans-serif;
 }
 
 @import 'navigation';
 
 #landing-page {
+  min-height: 100vh;
   display: flex;
-  height: 100vh;
+  justify-content: center;
   background-color: var(--bg-color);
 }
 
-#landing-page-left {
-  flex: 1;
+.content {
+  display: flex;
+  flex-direction: column;
+  height: inherit;
+  width: 80%;
   position: relative;
 }
 
-#landing-page-right{
+#landing-page-left, #landing-page-right {
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  position: relative;
 }
 
 @import 'themeswitch';
 @import 'restaurants';
 
 #main-title {
-  position: absolute;
-  top: 15%;
-  left: 15%;
   padding: 2em;
   color: var(--heading-color);
 }
 
 #main-title > h1 {
   font-size: $h1-size;
-  letter-spacing: 0.05em;
+  letter-spacing: $letter-spacing-header;
 }
 
 #main-title > h2 {
   font-size: $h2-size;
+  margin-top: $sp1;
 }
 
 #main-title > p {
-  font-size: $p-large;
+  font-size: $p-medium;
+  margin-top: $sp6;
+  letter-spacing: 0.01em;;
 }
 
-#info-container > h2{
-  position: absolute;
-  top: 20%;
+#info-box
+{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 40vh;
+  min-width: 20vw;
+  border: 1px solid $greymist;
+  border-radius: $card-border-radius;
+  padding: $sp4;
+}
+
+#info-container h2 {
   text-align: center;
   font-size: $h2-size;
   color: var(--heading-color);
 }
 
 .info-card {
-  max-width: 40em;
   background-color: var(--card-color);
   color: var(--text-color);
+  margin-top: 2em;
   padding: 1em;
   border: none;
   border-radius: $card-border-radius;
   box-shadow: 2px 5px 10px var(--shadow);
 }
 
+#info-btn {
+  min-height: 2em;
+  min-width: 4em;
+  background-color: $primary;
+  color: white;
+  border: none;
+  box-shadow: var(--shadow);
+  border-radius: 0.25em;
+  letter-spacing: $letter-spacing-btn;
+}
+
+.info-card h3 {
+  padding-bottom: $sp1;
+  font-size: $h3-size;
+}
+
+.info-card p {
+  padding-bottom: $sp2;
+  font-size: $p-medium;
+}
+
 @import 'hsl-data-layout';
 
-@media screen and (max-width: $mobile) {
-  #landng-page {
-    flex-direction: column;
+
+
+@media screen and (min-width: $superwide) {
+  .content {
+    flex-direction: row;
+    justify-content: space-between;
   }
+
+  #landing-page-right {
+   justify-content: flex-start;;
+  }
+
+  #main-title > h1 {
+    font-size: 4em;
+  }
+
+  #main-title > h2 {
+    font-size: 3em;
+  }
+
+  #main-title > p {
+    font-size: 2em;
+  }
+
+  #info-box {
+    margin-top: 10vh;
+  }
+
+
 }
 

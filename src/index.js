@@ -7,7 +7,6 @@ import HSLData from './modules/hsl-data';
 import announcementData from './modules/announcement';
 import Announcement from './modules/announcement';
 
-
 const today = new Date().toISOString().split('T')[0];
 console.log(today);
 
@@ -65,8 +64,8 @@ const switchTheme = (event) => {
 };
 
 /**
- * Creates lunch menu list items into menu list
- * @param {Array} menu lunch menu array
+ * Creates html cards for each restaurant and sets event listeners to modal btn
+ * @param {Array} restaurants array of restaurant objects
  */
 
 const createRestaurantCards = (restaurants) => {
@@ -79,7 +78,6 @@ const createRestaurantCards = (restaurants) => {
 
     const cardHeader = document.createElement('div');
     cardHeader.classList.add('menu-card-header');
-    //cardHeader.innerHTML = restaurant.title;
 
     const cardImgContainer = document.createElement('div');
     cardImgContainer.classList.add('menu-card-img-container');
@@ -112,6 +110,12 @@ const createRestaurantCards = (restaurants) => {
   }
 };
 
+/**
+ * Fills menu content for each restaurant card
+ * @param {Array} menu daily menu of each restaurant
+ * @param {Object} restaurant of restaurants array
+ */
+
 const fillMenuCard = (menu, restaurant) => {
   const cardContent = document.querySelector(`#${restaurant.name}`);
   cardContent.innerHTML = "";
@@ -124,7 +128,6 @@ const fillMenuCard = (menu, restaurant) => {
     listItem.innerHTML = course.title + ", " + course.price + ", " + course.diets;
     menuList.appendChild(listItem);
   });
-
   cardContent.appendChild(menuList);
 };
 
@@ -194,7 +197,7 @@ const renderHSLDataLocation = (departures) => {
 
   const gridTitles = document.createElement('div');
   gridTitles.classList.add('grid-title');
-  const titlesArray = ['Linja', 'Paikka', 'Etäisyys', 'Pysäkki', 'Päätepysäkki'];
+  const titlesArray = ['Linja', 'Pysäkki', 'Etäisyys', 'Päätepysäkki'];
   for (const title of titlesArray) {
     const titleDiv = document.createElement('div');
     titleDiv.innerHTML = title;
@@ -216,33 +219,14 @@ const renderHSLDataLocation = (departures) => {
     gridTimes.appendChild(timeDiv);
 
     gridContent.innerHTML += `<div>${departure.node.place.stoptimes[0].trip.route.shortName}</div>
-   <div>${departure.node.place.stop.name}</div>
+   <div>${departure.node.place.stop.name}<br>${departure.node.place.stop.code}</div>
    <div>${departure.node.distance} ${userSettings.lang == 'fi' ? 'metriä' : 'meters'}</div>
-   <div>${departure.node.place.stop.code}</div>
    <div>${departure.node.place.stoptimes[0].headsign}</div>`;
 
   }
   departureDiv.appendChild(gridContent);
   departureDiv.appendChild(gridTimes);
 
-  /*
-    departureDiv.innerHTML = `<h3>Seuraavat lähdöt Karaportin läheltä</h3><ul>`;
-
-    for (const departure of departures) {
-
-      if (Object.values(departure.node.place.stoptimes).length > 0) {
-        departureDiv.innerHTML += `<li>
-        ${HSLData.formatTime(departure.node.place.stoptimes[0].scheduledDeparture)}
-        ${departure.node.place.stoptimes[0].trip.route.shortName},
-        ${departure.node.place.stop.name},
-        ${departure.node.distance} ${userSettings.lang == 'fi' ? 'metriä' : 'meters'},
-        ${departure.node.place.stop.code},
-        ${departure.node.place.stoptimes[0].headsign},
-        </li>`;
-      }
-    }
-    departureDiv.innerHTML += `</ul>`;
-   */
   document.querySelector('.hsl-data-container').appendChild(departureDiv);
 };
 

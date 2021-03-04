@@ -11,8 +11,8 @@
 .restaurants-bg::after {
   content: "";
   position: absolute;
-  left: 10%;
-  right:10%;
+  left: 10vw;
+  right:10vw;
   top: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.4);
@@ -79,14 +79,16 @@
   color: white;
   position: relative;
   z-index: 2;
+  text-align: center;
+  margin: 0 10vw;
 }
 
-#restaurants-headings > h1 {
-  font-size: $h1-size;
+#restaurants-headings > h2 {
+  font-size: $h2-size;
 }
 
 #restaurants-headings > p {
-  font-size: $p-large;
+  font-size: $p-medium;
 }
 
 
@@ -116,19 +118,19 @@
 }
 
 .menu-cards-container {
-  width: 75%;
+  width: 80%;
   margin: auto;
   flex: 6;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  flex-direction: column;
+
 }
 
 /*CARDS*/
 .menu-card {
   display: flex;
   flex-direction: column;
-  width: 35vw;
+
   background-color: $white;
   border: none;
   border-radius: 0.5em;
@@ -194,9 +196,7 @@ article.menu-card:last-of-type:nth-of-type(odd) {
     transform: scale(0.5, 0.5) translateX(-60%);
 }
 
-#mouse-container {
-    display: none;
-}
+
 
 }
 
@@ -222,3 +222,30 @@ article.menu-card:last-of-type:nth-of-type(odd) {
       }
 
       }
+
+   @media screen and (min-width: $ipadpro)   {
+     .menu-cards-container {
+       flex-direction: row;
+       flex-wrap: wrap;
+       justify-content: space-between;
+
+     }
+
+     .menu-card {
+
+      width: 35vw;
+
+
+
+     }
+   }
+
+ @media screen and (min-width: $superwide) {
+  #restaurants-headings > h2 {
+    font-size: 3em;
+  }
+
+  #restaurants-headings > p {
+    font-size: 2em;
+  }
+ }

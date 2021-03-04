@@ -7,12 +7,15 @@
   overflow: hidden;
   background-color: var(--nav-color);
   border-bottom: 1px solid $greymist;
-  padding: 0 4em;
+  padding: 0 10vw;
   position: relative;
 
+  #logo-container {
+    align-self: center;
+  }
+
   img {
-    height: 70px;
-    padding-top: 0.5em;
+    height: 45px;
   }
 
   & .mobile-icon-container {
@@ -29,18 +32,16 @@
       padding: 0.5em;
       text-decoration: none;
       border-radius: 0.25em;
-      color: var(--text-color);
+      color: white;
+
+      text-transform: uppercase;
     }
   }
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: $mobile) {
   .topnav {
     padding: 0 2em;
-
-    img {
-      height: 50px;
-    }
 
     .nav-items {
       flex-direction: column;
@@ -49,9 +50,13 @@
       }
     }
 
+    img {
+      height: 40px;
+    }
+
     & .mobile-icon-container {
       background: var(--nav-color);
-      color: black;
+      color: white;
       display: block;
       position: absolute;
       top: 1em;
@@ -70,6 +75,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      opacity: 0.5;
     }
 
     &.mobile #logo-container {
@@ -84,4 +90,15 @@
 }
 .banner.mobile {
   margin-top: 8vh;
+}
+
+
+@media screen and (min-width: $superwide) {
+
+}
+
+@media screen and (min-width: 1500px) {
+  .topnav img {
+    height: 60px;
+  }
 }
