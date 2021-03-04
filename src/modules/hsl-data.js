@@ -28,53 +28,74 @@ const apiUrl = 'https://api.digitransit.fi/routing/v1/routers/hsl/index/graphql'
     };
   }`; */
 
-const getDeparturesAndArrivalsByLocation = async (lat, lon, distance) => {
+const getDeparturesAndArrivalsByLocation = async (lat, lon) => {
   const query = `{
-      nearest(lat: ${lat}, lon: ${lon}, maxDistance: ${distance}, filterByPlaceTypes: DEPARTURE_ROW) {
-        edges {
-          node {
-            place {
-              ...on DepartureRow {
-                stop {
-                  lat
-                  lon
-                  name
-                  code
-                }
-                stoptimes {
-                  serviceDay
-                  scheduledDeparture
-                  realtimeDeparture
-                  trip {
-                    route {
-                      shortName
-                      longName
-                    }
-                  }
-                  headsign
-                }
-              }
+  stopsByRadius(lat: ${lat}, lon: ${lon}, radius: 600, first: 10) {
+    edges {
+      node {
+        stop {
+          gtfsId
+          name
+          code
+          lat
+          lon
+          stoptimesWithoutPatterns {
+            scheduledArrival
+            realtimeArrival
+            arrivalDelay
+            scheduledDeparture
+            realtimeDeparture
+            departureDelay
+            realtime
+            realtimeState
+            serviceDay
+            headsign
+            trip {
+              tripHeadsign
+              routeShortName
             }
-            distance
           }
         }
+        distance
       }
-    }`;
+      cursor
+    }
+    pageInfo {
+        hasNextPage
+        endCursor
+    }
+  }
+}`;
 
-  // TODO: add try-catch error handling
   try {
     const hslData = await fetchPostJson(apiUrl, 'application/graphql', query);
-    const departures = hslData.data.nearest.edges;
-
-    const sortedDepartures = departures.filter((departure) => Object.values(departure.node.place.stoptimes).length > 0);
-    const departuresWithinXHours = sortedDepartures.filter((departure) => checkTimeWindow(departure.node.place.stoptimes[0].serviceDay + departure.node.place.stoptimes[0].scheduledDeparture));
-    departuresWithinXHours.sort((a, b) => a.node.place.stoptimes[0].scheduledDeparture - b.node.place.stoptimes[0].scheduledDeparture);
-
-    return departuresWithinXHours;
-
+    return parseHSLData(hslData.data.stopsByRadius.edges);
   } catch (error) {
     console.error(error);
   }
+};
+
+const parseHSLData = (edges) => {
+  const departuresToDisplay = 15;
+  let departures = [];
+    for(const edge of edges) {
+      const stopTimesArray = edge.node.stop.stoptimesWithoutPatterns;
+
+      for(const stopTime of stopTimesArray) {
+        const departureObj = {
+          distance: edge.node.distance,
+          name: edge.node.stop.name,
+          code: edge.node.stop.code,
+          headsign: stopTime.headsign,
+          routeShortName: stopTime.trip.routeShortName,
+          realtimeArrival: stopTime.realtimeArrival,
+          serviceDay: stopTime.serviceDay
+        };
+        departures.push(departureObj);
+      }
+    }
+    departures.sort((a, b) => (a.realtimeArrival + a.serviceDay) - (b.realtimeArrival + b.serviceDay));
+    return departures.slice(0, departuresToDisplay);
 };
 
 /**

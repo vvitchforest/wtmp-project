@@ -1,7 +1,5 @@
 import announcementData from '../assets/announcement-data.json';
 
-console.log(announcementData);
-
 const renderSlides = () => {
   const modalContent = document.querySelector('.announcement-modal-content');
   modalContent.innerHTML = "";

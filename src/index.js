@@ -176,18 +176,6 @@ const loadData = async () => {
   }
 };
 
-const renderHSLData = (stop) => {
-  const stopElement = document.createElement('div');
-  stopElement.innerHTML = `<h3>Seuraavat vuorot pysäkiltä ${stop.name}</h3><ul>`;
-  for (const ride of stop.stoptimesWithoutPatterns) {
-    stopElement.innerHTML += `<li>${ride.trip.routeShortName},
-      ${ride.trip.tripHeadsign},
-      ${HSLData.formatTime(ride.scheduledDeparture)}</li>`;
-  }
-  stopElement.innerHTML += `</ul>`;
-  document.querySelector('.hsl-data-container').appendChild(stopElement);
-};
-
 const renderHSLDataLocation = (departures) => {
 
   document.querySelector('.hsl-data-container').innerHTML = "";
@@ -209,20 +197,20 @@ const renderHSLDataLocation = (departures) => {
   const gridContent = document.createElement('div');
   gridContent.classList.add('grid-content');
   gridTimes.classList.add('grid-time');
-  gridTimes.style.gridTemplateRows = `repeat(${Object.values(departures).length}, 1fr)`;
-  gridContent.style.gridTemplateRows = `repeat(${Object.values(departures).length}, 1fr)`;
+  gridTimes.style.gridTemplateRows = `repeat(${departures}, 1fr)`;
+  gridContent.style.gridTemplateRows = `repeat(${departures}, 1fr)`;
 
-  for (const departure of departures) {
-    const timeDiv = document.createElement('div');
-    timeDiv.innerHTML = HSLData.formatTime(departure.node.place.stoptimes[0].scheduledDeparture);
-    gridTimes.appendChild(timeDiv);
+    for (const departureObj of departures) {
+      const timeDiv = document.createElement('div');
+      timeDiv.innerHTML = HSLData.formatTime(departureObj.realtimeArrival);
+      gridTimes.appendChild(timeDiv);
 
-    gridContent.innerHTML += `<div>${departure.node.place.stoptimes[0].trip.route.shortName}</div>
-   <div>${departure.node.place.stop.name}<br>${departure.node.place.stop.code}</div>
-   <div>${departure.node.distance}m</div>
-   <div>${departure.node.place.stoptimes[0].headsign}</div>`;
+      gridContent.innerHTML += `<div>${departureObj.routeShortName}</div>
+   <div>${departureObj.name}<br>${departureObj.code}</div>
+   <div>${departureObj.distance}m</div>
+   <div>${departureObj.headsign}</div>`;
+    }
 
-  }
   departureDiv.appendChild(gridContent);
   departureDiv.appendChild(gridTimes);
 
@@ -232,7 +220,7 @@ const renderHSLDataLocation = (departures) => {
 
 const loadHSLData = async () => {
   try {
-    const result = await HSLData.getDeparturesAndArrivalsByLocation(60.224200671262004, 24.758688330092166, 500);
+    const result = await HSLData.getDeparturesAndArrivalsByLocation(60.224200671262004, 24.758688330092166);
     console.log(stop);
     //renderHSLData(stop);
     renderHSLDataLocation(result);
@@ -292,7 +280,7 @@ const init = () => {
   Modal.setModalControls(infoBtn.id, announcementModal.id);
   loadHSLData();
 
-  serviceWorker();
+  //serviceWorker();
 };
 
 init();
