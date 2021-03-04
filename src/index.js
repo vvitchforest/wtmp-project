@@ -4,7 +4,6 @@ import FazerData from './modules/fazer-data';
 import Modal from './modules/modal';
 import './styles/main.scss';
 import HSLData from './modules/hsl-data';
-import announcementData from './modules/announcement';
 import Announcement from './modules/announcement';
 
 const today = new Date().toISOString().split('T')[0];
@@ -243,6 +242,7 @@ const loadHSLData = async () => {
 };
 
 const serviceWorker = () => {
+
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('./service-worker.js').then(registration => {
@@ -292,7 +292,7 @@ const init = () => {
   Modal.setModalControls(infoBtn.id, announcementModal.id);
   loadHSLData();
 
-  //serviceWorker();
+  serviceWorker();
 };
 
 init();
