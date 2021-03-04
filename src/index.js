@@ -85,7 +85,7 @@ const createRestaurantCards = (restaurants) => {
     image.src = restaurant.type.getRestaurantLogo();
     image.id = restaurant.name + '-img-id';
 
-    const cardTitle = document.createElement('h2');
+    const cardTitle = document.createElement('h3');
     cardTitle.innerHTML = restaurant.title;
 
     const cardContent = document.createElement('div');
@@ -220,7 +220,7 @@ const renderHSLDataLocation = (departures) => {
 
     gridContent.innerHTML += `<div>${departure.node.place.stoptimes[0].trip.route.shortName}</div>
    <div>${departure.node.place.stop.name}<br>${departure.node.place.stop.code}</div>
-   <div>${departure.node.distance} ${userSettings.lang == 'fi' ? 'metriä' : 'meters'}</div>
+   <div>${departure.node.distance}m</div>
    <div>${departure.node.place.stoptimes[0].headsign}</div>`;
 
   }

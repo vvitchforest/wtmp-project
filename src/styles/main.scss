@@ -22,10 +22,10 @@ body {
 @import 'navigation';
 
 #landing-page {
-  min-height: 100vh;
   display: flex;
   justify-content: center;
   background-color: var(--bg-color);
+
 }
 
 .content {
@@ -37,11 +37,14 @@ body {
 }
 
 #landing-page-left, #landing-page-right {
-  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+#landing-page-right {
+  margin-bottom: 2em;
 }
 
 @import 'themeswitch';
@@ -53,17 +56,17 @@ body {
 }
 
 #main-title > h1 {
-  font-size: $h1-size;
+  font-size: 2em;
   letter-spacing: $letter-spacing-header;
 }
 
 #main-title > h2 {
-  font-size: $h2-size;
+  font-size: 1.5em;
   margin-top: $sp1;
 }
 
 #main-title > p {
-  font-size: $p-medium;
+  font-size: 1em;
   margin-top: $sp6;
   letter-spacing: 0.01em;;
 }
@@ -82,7 +85,7 @@ body {
 
 #info-container h2 {
   text-align: center;
-  font-size: $h2-size;
+  font-size: 1.5em;
   color: var(--heading-color);
 }
 
@@ -109,12 +112,12 @@ body {
 
 .info-card h3 {
   padding-bottom: $sp1;
-  font-size: $h3-size;
+  font-size: 1.25em;
 }
 
 .info-card p {
   padding-bottom: $sp2;
-  font-size: $p-medium;
+  font-size: 1em;
 }
 
 @import 'hsl-data-layout';
@@ -146,7 +149,41 @@ body {
   #info-box {
     margin-top: 10vh;
   }
+}
 
+@media screen and (min-width: $mobile) {
+
+  #landing-page {
+    min-height: 100vh;
+  }
+
+  #landing-page-left, #landing-page-right {
+    flex: 1;
+  }
+
+  #main-title > h1 {
+    font-size: $h1-size;
+  }
+
+  #main-title > h2 {
+    font-size: $h2-size;
+  }
+
+  #main-title > p {
+    font-size: $p-medium;
+  }
+
+  #info-container h2 {
+    font-size: $h2-size;
+  }
+
+  .info-card h3 {
+    font-size: $h3-size;
+  }
+
+  .info-card p {
+    font-size: $p-medium;
+  }
 
 }
 

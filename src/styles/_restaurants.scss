@@ -4,7 +4,7 @@
   width: 100%;
   position: relative;
   overflow: hidden;
-  background: url("../assets/images/bg.jpg") no-repeat center center fixed ;
+  background: url("../assets/images/bg.jpg") no-repeat center center fixed;
   background-size: cover;
 }
 
@@ -12,7 +12,7 @@
   content: "";
   position: absolute;
   left: 10vw;
-  right:10vw;
+  right: 10vw;
   top: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.4);
@@ -24,7 +24,7 @@
   position: absolute;
 }
 
-#noodles  {
+#noodles {
   height: 100px;
   width: 100px;
   top: 6%;
@@ -59,7 +59,6 @@
   left: 20%;
 }
 
-
 .restaurants-content {
   width: 100%;
   display: flex;
@@ -84,38 +83,40 @@
 }
 
 #restaurants-headings > h2 {
-  font-size: $h2-size;
+  font-size: 1.5em;
 }
 
 #restaurants-headings > p {
-  font-size: $p-medium;
+  font-size: 1em;
 }
-
 
 #menu-btn-container {
   display: flex;
-  width: 10%;
+  width: 100%;
   align-self: center;
   justify-content: space-evenly;
   margin: 2em;
-
 }
-#menu-language-btn, #add-restaurant-btn {
+#menu-language-btn,
+#add-restaurant-btn {
   background-color: $secondary;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: $white;
-  padding: 0.5em;
-  border-radius: 0.5em;
-  border: none;
-  outline: none;
-  box-shadow: 2px 5px 10px var(--shadow);
-  height: 3.25em;
-  width: 3.25em;
   align-self: center;
-
+  min-height: 3em;
+  min-width: 5em;
+  background-color: $primary;
+  color: white;
+  border: none;
+  box-shadow: var(--shadow);
+  border-radius: 0.25em;
+  letter-spacing: $letter-spacing-btn;
 }
+
+
+
+
 
 .menu-cards-container {
   width: 80%;
@@ -123,7 +124,6 @@
   flex: 6;
   display: flex;
   flex-direction: column;
-
 }
 
 /*CARDS*/
@@ -137,10 +137,6 @@
   padding: 1.5em;
   margin-bottom: 2em;
   box-shadow: 2px 3px 15px var(--shadow);
-}
-
-article.menu-card:last-of-type:nth-of-type(odd) {
-  margin-right:auto;
 }
 
 .menu-card-header {
@@ -167,80 +163,98 @@ article.menu-card:last-of-type:nth-of-type(odd) {
   padding-top: 1em;
 }
 
-@import 'modal';
+.menu-card h3 {
+  font-size: 1em;
+}
 
+.menu-card li, p {
+  font-size: 0.75em;
+}
 
-
-
-
-
-
+@import "modal";
 
 @media only screen and (max-width: 1350px) {
   .dish-images {
-      transform: scale(0.7, 0.7) translateX(-10%);
+    transform: scale(0.7, 0.7) translateX(-10%);
   }
-
-  }
-
-  @media only screen and (max-width: 1100px) {
-      .dish-images {
-          transform: scale(0.6, 0.6) translateX(-40%);
-      }
-
-      }
-
-
-@media only screen and (max-width: 768px) {
-.dish-images {
-    transform: scale(0.5, 0.5) translateX(-60%);
 }
 
+@media only screen and (max-width: 1100px) {
+  .dish-images {
+    transform: scale(0.6, 0.6) translateX(-40%);
+  }
+}
 
-
+@media only screen and (max-width: 768px) {
+  .dish-images {
+    transform: scale(0.5, 0.5) translateX(-60%);
+  }
 }
 
 @media only screen and (max-width: 600px) {
   .dish-images {
-      transform: scale(0.4, 0.4) translateX(-90%);
+    transform: scale(0.4, 0.4) translateX(-90%);
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .dish-images {
+    transform: scale(0.3, 0.3) translateX(-100%);
   }
 
+  #pasta {
+    transform: scale(0.3, 0.3) translate(-100%, -100%);
   }
 
-  @media only screen and (max-width: 600px) {
-      .dish-images {
-          transform: scale(0.3, 0.3) translateX(-100%);
-      }
+  #soup {
+    transform: scale(0.3, 0.3) translate(-200%, +80%);
+  }
+}
 
-      #pasta {
-          transform: scale(0.3, 0.3) translate(-100%, -100%);
-      }
+@media screen and (min-width: $small) {
+  .menu-card h3 {
+    font-size: 1.5em;
+  }
 
-      #soup {
-          transform: scale(0.3, 0.3) translate(-200%, +80%);
-
-      }
-
-      }
-
-   @media screen and (min-width: $ipadpro)   {
-     .menu-cards-container {
-       flex-direction: row;
-       flex-wrap: wrap;
-       justify-content: space-between;
-
-     }
-
-     .menu-card {
-
-      width: 35vw;
+  .menu-card li, p {
+    font-size: 1em;
+  }
 
 
+#menu-btn-container {
 
-     }
-   }
+  width: 30%;
 
- @media screen and (min-width: $superwide) {
+}
+}
+
+@media screen and (min-width: $mobile) {
+  #restaurants-headings > h2 {
+    font-size: $h2-size;
+  }
+
+  #restaurants-headings > p {
+    font-size: $p-medium;
+  }
+}
+
+@media screen and (min-width: $ipadpro) {
+  .menu-cards-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .menu-card {
+    width: 38vw;
+  }
+
+  article.menu-card:last-of-type:nth-of-type(odd) {
+    margin-right: auto;
+  }
+}
+
+@media screen and (min-width: $superwide) {
   #restaurants-headings > h2 {
     font-size: 3em;
   }
@@ -248,4 +262,17 @@ article.menu-card:last-of-type:nth-of-type(odd) {
   #restaurants-headings > p {
     font-size: 2em;
   }
- }
+
+  .menu-card h3 {
+    font-size: 2em;
+  }
+
+  .menu-card li, p {
+    font-size: 1.25em;
+  }
+
+
+#menu-btn-container {
+  width: 15%;
+}
+}
