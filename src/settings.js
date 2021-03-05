@@ -12,4 +12,6 @@ const networkProxyUrl = 'https://cors-anywhere.herokuapp.com/';
 // Url for proxy-server/fazer.php (use your own)
 const fazerProxyUrl = 'https://users.metropolia.fi/~irinakon/fazer.php';
 
-export {networkProxyUrl, fazerProxyUrl};
+const coronaProxyUrl = 'https://users.metropolia.fi/~irinakon/corona.php';
+
+export {networkProxyUrl, fazerProxyUrl, coronaProxyUrl};

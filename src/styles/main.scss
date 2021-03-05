@@ -71,6 +71,18 @@ body {
   letter-spacing: 0.01em;;
 }
 
+#weather {
+  height: 300px;
+  width: 300px;
+  background-color: hotpink;
+}
+
+#corona-data {
+  height: 200px;
+  width: 200px;
+  background-color: indigo;
+}
+
 #info-box
 {
   display: flex;

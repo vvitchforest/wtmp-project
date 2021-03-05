@@ -52,5 +52,4 @@ const fetchPostJson = async (url, contentType, body, useProxy = false) => {
   return responseJson;
 };
 
-
 export {fetchGet, fetchPostJson};

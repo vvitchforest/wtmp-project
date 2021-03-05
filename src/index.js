@@ -5,6 +5,8 @@ import Modal from './modules/modal';
 import './styles/main.scss';
 import HSLData from './modules/hsl-data';
 import Announcement from './modules/announcement';
+import Weather from './modules/weather';
+import Corona from './modules/corona';
 
 const today = new Date().toISOString().split('T')[0];
 console.log(today);
@@ -14,6 +16,56 @@ const infoBtn = document.querySelector('#info-btn');
 const modeToggle = document.getElementById('checkbox');
 const announcementModal = document.getElementById('announcement-modal');
 const menuModal = document.getElementById('myModal');
+
+const weatherDiv = document.getElementById('weather');
+const coronaDiv = document.getElementById('corona-data');
+
+const loadWeatherData = async () => {
+  try {
+    const weatherData = await Weather.getCurrentWeather();
+    renderCurrentWeather(weatherData);
+  }
+  catch (error) {
+    console.error(error);
+  }
+};
+
+const loadCoronaData = async () => {
+  try {
+    const coronaData = await Corona.getCoronaInfo();
+    renderCoronaData(coronaData);
+  }
+  catch (error) {
+    console.error(error);
+  }
+};
+
+const renderCoronaData = (coronaData) => {
+  const casesThisWeek = document.createElement('span');
+  const totalCasesUusimaa = document.createElement('span');
+
+  coronaDiv.appendChild(casesThisWeek);
+  coronaDiv.appendChild(totalCasesUusimaa);
+
+};
+
+const renderCurrentWeather = (weatherData) => {
+  const weatherImg = document.createElement('img');
+  weatherImg.src = `http://openweathermap.org/img/wn/${weatherData.weather[0].icon}.png`;
+
+  const weatherDesc = document.createElement('p');
+  weatherDesc.innerHTML = `${weatherData.weather[0].main}`;
+
+  const weatherTemp = document.createElement('span');
+  weatherTemp.innerHTML = `${weatherData.main.temp} °C`;
+
+  weatherDiv.appendChild(weatherImg);
+  weatherDiv.appendChild(weatherDesc);
+  weatherDiv.appendChild(weatherTemp);
+};
+
+
+
 
 let userSettings = {
   colorTheme: 'light',
@@ -200,16 +252,16 @@ const renderHSLDataLocation = (departures) => {
   gridTimes.style.gridTemplateRows = `repeat(${departures}, 1fr)`;
   gridContent.style.gridTemplateRows = `repeat(${departures}, 1fr)`;
 
-    for (const departureObj of departures) {
-      const timeDiv = document.createElement('div');
-      timeDiv.innerHTML = HSLData.formatTime(departureObj.realtimeArrival);
-      gridTimes.appendChild(timeDiv);
+  for (const departureObj of departures) {
+    const timeDiv = document.createElement('div');
+    timeDiv.innerHTML = HSLData.formatTime(departureObj.realtimeArrival);
+    gridTimes.appendChild(timeDiv);
 
-      gridContent.innerHTML += `<div>${departureObj.routeShortName}</div>
+    gridContent.innerHTML += `<div>${departureObj.routeShortName}</div>
    <div>${departureObj.name}<br>${departureObj.code}</div>
    <div>${departureObj.distance}m</div>
    <div>${departureObj.headsign}</div>`;
-    }
+  }
 
   departureDiv.appendChild(gridContent);
   departureDiv.appendChild(gridTimes);
@@ -244,8 +296,6 @@ const serviceWorker = () => {
 
 
 const init = () => {
-
-
   document.querySelector('.mobile-icon-container').addEventListener('click', () => {
     const topNav = document.querySelector('.topnav');
     const navList = document.querySelector('.nav-items');
@@ -279,6 +329,8 @@ const init = () => {
   infoBtn.addEventListener('click', Announcement.renderSlides);
   Modal.setModalControls(infoBtn.id, announcementModal.id);
   loadHSLData();
+  loadWeatherData();
+  loadCoronaData();
 
   //serviceWorker();
 };
