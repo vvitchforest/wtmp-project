@@ -8,14 +8,14 @@ import Announcement from './modules/announcement';
 import Weather from './modules/weather';
 import Corona from './modules/corona';
 
-const today = new Date().toISOString().split('T')[0];
+let today = new Date().toISOString().split('T')[0];
 console.log(today);
 
 const languageBtn = document.querySelector('#menu-language-btn');
 const infoBtn = document.querySelector('#info-btn');
 const modeToggle = document.getElementById('checkbox');
 const announcementModal = document.getElementById('announcement-modal');
-const menuModal = document.getElementById('myModal');
+const weeklyMenuModal = document.getElementById('myModal');
 
 const weatherDiv = document.getElementById('weather');
 const coronaDiv = document.getElementById('corona-data');
@@ -150,7 +150,7 @@ const createRestaurantCards = (restaurants) => {
     restaurantCard.appendChild(cardContent);
     cardContainer.appendChild(restaurantCard);
 
-    Modal.setModalControls(image.id, menuModal.id);
+    Modal.setModalControls(image.id, weeklyMenuModal.id);
 
     if (restaurant.type === FazerData) {
       document.getElementById(image.id).addEventListener('click', () => {
@@ -204,15 +204,16 @@ const switchLanguage = () => {
 };
 
 const loadWeeklyData = async (restaurant) => {
-  let weeklyMenu;
   try {
-    weeklyMenu = await FazerData.getWeeklyMenu(restaurant.id, userSettings.lang, today);
+    const weeklyMenu = await FazerData.getWeeklyMenu(restaurant.id, userSettings.lang, today);
+    console.log(weeklyMenu);
+    return weeklyMenu;
   }
   catch (error) {
     console.error(error);
     noDataNotification(`${userSettings.lang == 'fi' ? 'Tälle päivälle ei löytynyt aterioita' : 'No meals were found for this day'}`, restaurant.name);
   }
-  return weeklyMenu;
+
 };
 
 const loadData = async () => {

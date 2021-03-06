@@ -84,19 +84,18 @@ const joinMeals = (parsedMenu) => {
 };
 
 const getWeeklyMenu = async (restaurantId, lang, date) => {
-
-
-  let weeklyMenu;
+  date = '2020-02-14';
   try {
-    weeklyMenu = await fetchGet(`${fazerProxyUrl}/api/restaurant/menu/week?language=${lang}&restaurantPageId=${restaurantId}&weekDate=${date}`);
+    const weeklyMenu = await fetchGet(`${fazerProxyUrl}/api/restaurant/menu/week?language=${lang}&restaurantPageId=${restaurantId}&weekDate=${date}`);
+    return parseWeeklyMenu(weeklyMenu);
   } catch (error) {
     throw new Error(error.message);
   }
-  return parseWeeklyMenu(weeklyMenu);
 };
 
 const getDailyMenu = async (restaurantId, lang, date) => {
 
+  date = '2020-02-14';
 
   let dayOfTheWeek = new Date().getDay();
 

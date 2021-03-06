@@ -29,12 +29,11 @@ openModalImgBtn.addEventListener('click', modalOpen);
 
 
 
-
   const renderModalContent = async (fetchResult) => {
     const weeklyMenu = await fetchResult;
     console.log(weeklyMenu);
-    const modal = document.getElementById('myModal');
-    const modalContent = document.querySelector('.modal-content');
+    const modal = document.querySelector('.modal-content');
+    const weeklyMenuContainer = document.querySelector('#weekly-menu-container');
     const modalParagraph = document.createElement('p');
     modalParagraph.innerHTML += `<h3>Viikko ${weeklyMenu.WeekNumber}</h3><br>`;
 
@@ -45,11 +44,13 @@ openModalImgBtn.addEventListener('click', modalOpen);
       }
       modalParagraph.innerHTML += `<br>`;
     }
-    modalContent.innerHTML = "";
-    modalContent.appendChild(modalParagraph);
-    modal.appendChild(modalContent);
+    weeklyMenuContainer.innerHTML = "";
+    weeklyMenuContainer.appendChild(modalParagraph);
+    modal.appendChild(weeklyMenuContainer);
 
   };
+
+
 
   const setModalControls = (triggerId, modalId) => {
     // Get the modal
@@ -57,10 +58,11 @@ openModalImgBtn.addEventListener('click', modalOpen);
     // Get the button that opens the modal
     const btn = document.getElementById(triggerId);
     // Get the <span> element that closes the modal
-    const span = document.getElementsByClassName("close")[0];
+    const span = document.getElementById(modalId + "-close");
     // When the user clicks on the button, open the modal
     btn.addEventListener('click', () => {
-      modal.style.display = "block";
+      modal.style.display = "flex";
+      modal.style.alignItems = "center";
     });
     // When the user clicks on <span> (x), close the modal
     span.addEventListener('click', () => {
