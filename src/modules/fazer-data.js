@@ -103,9 +103,8 @@ const getDailyMenu = async (restaurantId, lang, date) => {
   if (dayOfTheWeek === -1) {
     dayOfTheWeek = 6;
   }
-  dayOfTheWeek = 4;
-  //const weeklyUrlEn = `${fazerProxyUrl}/api/restaurant/menu/week?language=en`;
-  //${lang == 'fi' ? weeklyUrlFi : weeklyUrlEn}
+  dayOfTheWeek = 3;
+
   let weeklyMenu;
   try {
     weeklyMenu = await fetchGet(`${fazerProxyUrl}/api/restaurant/menu/week?language=${lang}&restaurantPageId=${restaurantId}&weekDate=${date}`);

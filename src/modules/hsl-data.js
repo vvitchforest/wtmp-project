@@ -110,18 +110,5 @@ const formatTime = (seconds) => {
   return `${hours >= 24 ? (hours - 24) : hours}:${minutes < 10 ? '0' + minutes : minutes}`;
 };
 
-const checkTimeWindow = (departureUnix) => {
-  const currentTime = moment.unix(moment.now() / 1000).format('YYYY-MM-DD h:mm a');
-  const hoursFromNow = moment.unix(moment.now() / 1000 + (6 * 60 * 60)).format('YYYY-MM-DD h:mm a');
-  const departure = moment.unix(departureUnix).format('YYYY-MM-DD h:mm a');
-
-  const startMoment = moment(currentTime, 'YYYY-MM-DD h:mm a');
-  const hoursFromNowMoment = moment(hoursFromNow, 'YYYY-MM-DD h:mm a');
-  const departureMoment = moment(departure, 'YYYY-MM-DD h:mm a');
-
-  const range = moment.range(startMoment, hoursFromNowMoment);
-  return departureMoment.within(range);
-};
-
 const HSLData = { formatTime, getDeparturesAndArrivalsByLocation };
 export default HSLData;

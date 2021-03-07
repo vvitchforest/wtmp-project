@@ -13,6 +13,7 @@ console.log(today);
 
 const languageBtn = document.querySelector('#menu-language-btn');
 const infoBtn = document.querySelector('#info-btn');
+const addRestaurantBtn = document.querySelector('#add-restaurant-btn');
 const modeToggle = document.getElementById('checkbox');
 const announcementModal = document.getElementById('announcement-modal');
 const weeklyMenuModal = document.getElementById('myModal');
@@ -64,41 +65,49 @@ const renderCurrentWeather = (weatherData) => {
   weatherDiv.appendChild(weatherTemp);
 };
 
-
-
-
-let userSettings = {
-  colorTheme: 'light',
-  lang: 'fi'
-};
-
-const restaurants = [
+let selectedRestaurants = [
   {
-    title: 'Sodexo Myllypuro',
-    name: 'sodexo-myllypuro',
-    id: 158,
-    type: SodexoData,
-
-  }, {
     title: 'Fazer Karaportti',
     name: 'fazer-kp',
     id: 270540,
     type: FazerData
   },
+];
+
+let unselectedRestaurants = [
   {
     title: 'Sodexo Myyrmäki',
     name: 'sodexo-myyrmaki',
     id: 152,
     type: SodexoData
   },
+  {
+    title: 'Sodexo Myllypuro',
+    name: 'sodexo-myllypuro',
+    id: 158,
+    type: SodexoData,
+
+  },
 ];
 
-/**
- * Updates user settings
- */
-const updateUserSettings = () => {
-  localStorage.setItem('userConfig', JSON.stringify(userSettings));
+let userSettings = {
+  colorTheme: 'light',
+  lang: 'fi',
+  restaurants: []
 };
+
+const createRestaurantOptions = (unselected) => {
+  const restaurantsSelect = document.querySelector('#restaurants-select');
+  restaurantsSelect.innerHTML = "";
+  for (const unselectedRestaurant of unselected) {
+    const option = document.createElement('option');
+    option.value = unselectedRestaurant.name;
+    option.innerHTML = unselectedRestaurant.title;
+    restaurantsSelect.appendChild(option);
+  }
+};
+
+
 
 /**
  * Switches colour theme
@@ -161,6 +170,26 @@ const createRestaurantCards = (restaurants) => {
   }
 };
 
+const addingRestaurants = () => {
+  if (unselectedRestaurants.length > 0) {
+    const restaurantOptions = document.querySelector('#restaurants-select');
+    const selectedRestaurant = unselectedRestaurants.splice(unselectedRestaurants.findIndex(a => a.name === restaurantOptions.value), 1);
+
+    const addedRestaurant = {
+      title: selectedRestaurant[0].title,
+      name: selectedRestaurant[0].name,
+      id: selectedRestaurant[0].id,
+      type: selectedRestaurant[0].type
+    };
+    selectedRestaurants.push(addedRestaurant);
+
+    createRestaurantCards(selectedRestaurants);
+    createRestaurantOptions(unselectedRestaurants);
+    loadData();
+    updateUserSettings();
+  }
+};
+
 /**
  * Fills menu content for each restaurant card
  * @param {Array} menu daily menu of each restaurant
@@ -198,9 +227,9 @@ const switchLanguage = () => {
   } else {
     userSettings.lang = 'fi';
   }
-  updateUserSettings();
   loadData();
   loadHSLData();
+  updateUserSettings();
 };
 
 const loadWeeklyData = async (restaurant) => {
@@ -217,7 +246,7 @@ const loadWeeklyData = async (restaurant) => {
 };
 
 const loadData = async () => {
-  for (const restaurant of restaurants) {
+  for (const restaurant of selectedRestaurants) {
     try {
       const parsedMenu = await restaurant.type.getDailyMenu(restaurant.id, userSettings.lang, today);
       fillMenuCard(parsedMenu, restaurant);
@@ -295,6 +324,35 @@ const serviceWorker = () => {
   }
 };
 
+const getUserRestaurants = (userSettings) => {
+  for (const restaurant of userSettings.restaurants) {
+    if (restaurant.type === "FazerData") {
+      restaurant.type = FazerData;
+    } else if ( restaurant.type === "SodexoData"){
+      restaurant.type = SodexoData;
+    }
+  }
+  return userSettings.restaurants;
+};
+
+/**
+ * Updates user settings
+ */
+ const updateUserSettings = () => {
+  const userRestaurants = [];
+  for(const addedRestaurant of selectedRestaurants) {
+    const addition = {
+      title: addedRestaurant.title,
+      name: addedRestaurant.name,
+      id: addedRestaurant.id,
+      type: (addedRestaurant.type === FazerData ? "FazerData" : "SodexoData")
+    };
+    userRestaurants.push(addition);
+  }
+  userSettings.restaurants = userRestaurants;
+  localStorage.setItem('userConfig', JSON.stringify(userSettings));
+};
+
 
 const init = () => {
   document.querySelector('.mobile-icon-container').addEventListener('click', () => {
@@ -313,25 +371,32 @@ const init = () => {
     }
   });
 
-
   //Load from local storage if exists or use default user settings
   if (localStorage.getItem('userConfig')) {
     userSettings = JSON.parse(localStorage.getItem("userConfig"));
+
+    if (userSettings.restaurants.length > 0) {
+      selectedRestaurants = getUserRestaurants(userSettings);
+      unselectedRestaurants = unselectedRestaurants.filter( (unselected) =>!selectedRestaurants.find( (selected) => ( selected.name === unselected.name) ));
+    }
+
     document.querySelector('body').setAttribute('data-theme', userSettings.colorTheme);
     if (userSettings.colorTheme === 'dark') {
       modeToggle.checked = true;
     }
   }
 
-  createRestaurantCards(restaurants);
+  createRestaurantCards(selectedRestaurants);
+  createRestaurantOptions(unselectedRestaurants);
   loadData();
   modeToggle.addEventListener('change', switchTheme, false);
   languageBtn.addEventListener('click', switchLanguage);
+  addRestaurantBtn.addEventListener('click', addingRestaurants);
   infoBtn.addEventListener('click', Announcement.renderSlides);
   Modal.setModalControls(infoBtn.id, announcementModal.id);
   loadHSLData();
-  loadWeatherData();
-  loadCoronaData();
+  /*loadWeatherData();
+  loadCoronaData();*/
 
   //serviceWorker();
 };

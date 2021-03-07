@@ -40,6 +40,7 @@ const getRestaurantLogo = () => {
 };
 
 const getDailyMenu = async (restaurantId, lang, date) => {
+  date = '2021-03-02';
   let menuData;
   try {
     menuData = await fetchGet(`${dailyUrl}/${restaurantId}/${date}`);
