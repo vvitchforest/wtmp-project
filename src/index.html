@@ -12,13 +12,17 @@
 <body>
   <!--NABVAR-->
   <nav class="topnav">
-    <div id="logo-container">
-      <img src="./assets/icons/logo.svg">
-    </div>
+
     <ul class="nav-items">
       <li><a href="#restaurants-content-id">Ruokalistat</a></li>
       <li><a href="#transport">Liikenneyhteydet</a></li>
     </ul>
+    <div class="theme-switch-container">
+          <label class="theme-switch" for="checkbox">
+            <input type="checkbox" id="checkbox">
+            <div class="slider-theme"></div>
+          </label>
+        </div>
     <div class="mobile-icon-container">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="ionicon" viewBox="0 0 512 512">
         <title>Menu</title>
@@ -33,6 +37,7 @@
 
       <div id="landing-page-left">
         <header id="main-title">
+          <img src="./assets/images/metropolia.png">
           <h1>Metropolia Info</h1>
           <h2>Karaportti</h2>
           <p>Metropolia Info on infosovellus, joka näyttää ajankohtaista infoa, päivittäiset ja viikoittaiset
@@ -40,14 +45,9 @@
         </header>
       </div>
       <div id="landing-page-right">
-        <div class="theme-switch-container">
-          <label class="theme-switch" for="checkbox">
-            <input type="checkbox" id="checkbox">
-            <div class="slider-theme"></div>
-          </label>
-        </div>
-        <div id="weather"></div>
-        <div id="corona-data"></div>
+
+
+
         <section id="info-container">
           <article id="info-box">
             <h2>Ajankohtaista</h2>
@@ -58,6 +58,8 @@
               <button id="info-btn">AVAA</button>
             </div>
           </article>
+          <div id="weather"></div>
+          <diV id="corona-data"></diV>
       </div>
   </section>
 

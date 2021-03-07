@@ -40,7 +40,8 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  margin-top: 3em;
 }
 
 #landing-page-right {
@@ -53,6 +54,10 @@ body {
 #main-title {
   padding: 2em;
   color: var(--heading-color);
+}
+
+#main-title img {
+  width: 400px;
 }
 
 #main-title > h1 {
@@ -142,10 +147,6 @@ body {
     justify-content: space-between;
   }
 
-  #landing-page-right {
-   justify-content: flex-start;;
-  }
-
   #main-title > h1 {
     font-size: 4em;
   }
@@ -159,8 +160,10 @@ body {
   }
 
   #info-box {
-    margin-top: 10vh;
+    margin-top: 5vh;
   }
+
+
 }
 
 @media screen and (min-width: $mobile) {

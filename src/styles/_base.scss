@@ -4,18 +4,16 @@
 }
 
 /*THEME COLOURS*/
-$primary: #ff7820;
+$primary:  #ff5000;
 $secondary:  #503592;
-$green: #d0e6c2;
-$green-shadow: #a3b398;
-$white: ghostwhite;
+$white: white;
 $lightgrey: #e7f2fd;
 $greymist: #9BADBF;
-$charcoal: #343A40;
+$charcoal: #333333;
 $dusk: #252032;
 $dark: #0d1117;
 $black: #000000;
-$hsl-pink: #ef99bc;
+
 
 /*Colours need to be converted to CSS variables, because switching to dark theme doesn't work with SASS variables*/
 :root {
@@ -23,9 +21,10 @@ $hsl-pink: #ef99bc;
   --text-color: #{$charcoal};
   --shadow: #{$greymist};
   --card-color: #{$white};
-  --nav-color: #{$primary};
-  --heading-color: #{$black};
-  --border-color: #{$white};
+  --nav-color: #{$white};
+  --nav-text: #{$black};
+  --heading-color: #{$charcoal};
+  --border-color: #{$greymist};
 }
 
 /*DARK THEME*/
@@ -35,6 +34,7 @@ $hsl-pink: #ef99bc;
   --shadow: #{$black};
   --card-color: #{$dusk};
   --nav-color: #{$dusk};
+  --nav-text: #{$white};
   --heading-color: #{$lightgrey};
   --border-color: #{$greymist};
 }

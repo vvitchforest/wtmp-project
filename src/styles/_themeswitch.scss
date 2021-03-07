@@ -1,7 +1,8 @@
 .theme-switch-container {
   position: absolute;
-  top: 5%;;
-  right: 0;
+  top: 1em;
+  right: 2em;
+
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -57,4 +58,10 @@ input:checked + .slider-theme::before {
   transform: translateX(1.375em);
 }
 
-
+@media screen and (min-width: $mobile) {
+.theme-switch-container {
+  position: relative;
+  top: 0;
+  right: 0;
+}
+}

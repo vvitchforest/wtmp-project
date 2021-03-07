@@ -1,21 +1,17 @@
 .topnav {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   width: 100vw;
   height: 8vh;
   margin: auto;
   overflow: hidden;
   background-color: var(--nav-color);
-  border-bottom: 1px solid $greymist;
+  border-bottom: 2px solid $primary;
   padding: 0 10vw;
   position: relative;
 
   #logo-container {
     align-self: center;
-  }
-
-  img {
-    height: 45px;
   }
 
   & .mobile-icon-container {
@@ -32,9 +28,9 @@
       padding: 0.5em;
       text-decoration: none;
       border-radius: 0.25em;
-      color: white;
-
+      color: var(--nav-text);
       text-transform: uppercase;
+      font-weight: bold;
     }
   }
 }
@@ -48,19 +44,19 @@
       a {
         display: none;
       }
-    }
 
-    img {
-      height: 40px;
+      &.mobile {
+        margin-top: 2em;
+      }
     }
 
     & .mobile-icon-container {
       background: var(--nav-color);
-      color: white;
+      color: var(--text-color);
       display: block;
       position: absolute;
       top: 1em;
-      right: 2em;
+      left: 2em;
     }
 
     &.mobile {
@@ -75,12 +71,8 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      opacity: 0.5;
     }
 
-    &.mobile #logo-container {
-      align-self: flex-start;
-    }
 
     &.topnav.mobile a {
       display: inline-block;
