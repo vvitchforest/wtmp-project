@@ -24,16 +24,22 @@
     list-style: none;
 
     & a {
-      font-size: 1.125em;;
+      font-size: 1.125em;
       padding: 0.5em;
       text-decoration: none;
       border-radius: 0.25em;
       color: var(--nav-text);
       text-transform: uppercase;
       font-weight: 600;
-      font-family: 'Open Sans', sans-serif;
+      font-family: "Open Sans", sans-serif;
       letter-spacing: $letter-spacing-btn;
     }
+  }
+}
+
+@media screen and (min-width: $ipadpro) {
+  .nav-items a:hover {
+    background-color: $primary;
   }
 }
 
@@ -75,7 +81,6 @@
       justify-content: center;
     }
 
-
     &.topnav.mobile a {
       display: inline-block;
       font-size: 1em;
@@ -85,8 +90,3 @@
 .banner.mobile {
   margin-top: 8vh;
 }
-
-
-
-
-

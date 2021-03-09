@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="fi">
 
 <head>
   <meta charset="utf-8" />
+  <meta name="description"
+    content="Metropolia Info Karaportti on sovellus, joka näyttää ajankohtaista informaatiota karaportin kampuksesta, mukaan lukien tiedotteet, ruokalistat ja liikenneyhteydet.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>
     <%= htmlWebpackPlugin.options.title %>
@@ -19,7 +21,7 @@
     <div class="theme-switch-container">
       <label class="theme-switch" for="checkbox">
         <input type="checkbox" id="checkbox">
-        <div class="slider-theme"></div>
+        <span class="slider-theme"></span>
       </label>
     </div>
     <div class="mobile-icon-container">
@@ -33,10 +35,9 @@
   <!--LANDING PAGE-->
   <section id="landing-page" class="banner">
     <div class="content">
-
       <div id="landing-page-left">
         <header id="main-title">
-          <img src="./assets/images/metropolia.png">
+          <img src="./assets/images/metropolia.png" alt="metropolia-logo-image">
           <h1>Metropolia Info</h1>
           <h2>Karaportti</h2>
           <p>Metropolia Info on infosovellus, joka näyttää ajankohtaista infoa, päivittäiset ja viikoittaiset
@@ -79,39 +80,27 @@
         </div>
       </div>
     </header>
-
     <div id="menu-btn-container">
-      <label for="restaurants">Valitse ravintola:</label>
       <div id="btn-wrapper">
-        <select id="restaurants-select" name="restaurants">
-        </select>
-        <button id="add-restaurant-btn" name="add-restaurant">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-            class="feather feather-plus">
-            <line x1="12" y1="5" x2="12" y2="19" />
-            <line x1="5" y1="12" x2="19" y2="12" />
-          </svg>
-        </button>
+        <label for="restaurants-select">Valitse ravintola:</label>
+        <div id="select-wrapper">
+          <select id="restaurants-select" name="restaurants">
+          </select>
+          <button class="btn" id="add-restaurant-btn" name="add-restaurant" aria-label="Add Restaurant Button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="feather feather-plus">
+              <line x1="12" y1="5" x2="12" y2="19" />
+              <line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
+          </button>
+        </div>
       </div>
-      <button id="menu-language-btn">FI/EN</button>
+      <button class="btn" id="menu-language-btn">FI/EN</button>
     </div>
     <div class="menu-cards-container"></div>
   </section>
-
-
-
-  </section>
-  <div id="myModal" class="modal">
-    <!-- Modal content -->
-    <div class="modal-content">
-      <span id="myModal-close" class="close">&times;</span>
-      <div id="weekly-menu-container"></div>
-    </div>
-  </div>
-
-
-
+  <!--TRANSPORT AREA-->
   <section id="transport">
     <header id="transport-header" class="header">
       <div class="header-bg">
@@ -122,9 +111,14 @@
     </header>
     <div class="hsl-data-container"></div>
   </section>
-
-
-
+  <!--MODAL CONTENT-->
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <span id="myModal-close" class="close">&times;</span>
+      <div id="weekly-menu-container"></div>
+    </div>
+  </div>
+  <script src="./assets/modernizr-custom.js"></script>
 
 </body>
 

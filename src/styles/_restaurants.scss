@@ -1,5 +1,3 @@
-/*BACKGROUND*/
-
 @import "headers";
 
 #restaurants-header {
@@ -15,42 +13,57 @@
 #menu-btn-container {
   display: flex;
   flex-wrap: wrap;
-  width: 100%;
+  width: 90%;
   align-self: center;
-  justify-content: center;
+  justify-content: flex-end;
   margin: 2em;
 }
-#menu-language-btn,
-#add-restaurant-btn {
+
+#menu-btn-container label {
+  align-self: center;
+  margin-right: 1em;
+  font-weight: 600;
+  align-self: flex-start;
+  padding-bottom: 0.5em;
+
+}
+
+.btn {
   background-color: $secondary;
   display: flex;
   justify-content: center;
   align-items: center;
   align-self: center;
-  height: 2.5em;
-  width: 4em;
   font-weight: bold;
   background-color: $primary;
   color: black;
   border: none;
   box-shadow: 2px 3px 10px var(--shadow);
   outline: none;
-
   letter-spacing: $letter-spacing-btn;
 }
 
 #btn-wrapper {
   display: flex;
+  flex-direction: column;
+}
+
+#select-wrapper {
+  display: flex;
 }
 
 #add-restaurant-btn {
+  height: 2.5em;
+  width: 4em;
   border-radius: 0 0.25em 0.25em 0;
 }
 
-
 #menu-language-btn {
+  height: 2.5em;
+  width: 4em;
   margin-left: 1em;
   border-radius: 0.25em;
+  align-self: flex-end;
 }
 
 #restaurants-select {
@@ -59,10 +72,10 @@
   border-radius: 0.25em 0 0 0.25em;
   padding: $sp1;
   box-shadow: 2px 3px 10px var(--shadow);
+
 }
-#restaurant-select option[value] {
-  font-weight: 600;
-}
+
+/*CARDS*/
 
 .menu-cards-container {
   margin: 0 $sp4;
@@ -70,15 +83,14 @@
   flex-direction: column;
 }
 
-/*CARDS*/
 .menu-card {
   display: flex;
   flex-direction: column;
-  background-color: $white;
+  background-color: var(--card-color);
   border: none;
   border-radius: 0.5em;
-  padding: 1.5em;
   margin-bottom: 2em;
+  padding-bottom: $sp5;
   box-shadow: 2px 3px 15px var(--shadow);
 }
 
@@ -87,16 +99,18 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding-bottom: 1em;
-  border-bottom: 1px solid $greymist;
+  padding: 1.5em 0;
+  background-color: $greymist;
+  border-radius: $card-border-radius $card-border-radius 0 0;
 }
 
 .menu-card-img-container {
   padding-bottom: 0.5em;
 }
+
 .menu-card-img-container > img {
-  height: 100px;
-  width: 100px;
+  height: 60px;
+  width: 60px;
   border-radius: 50%;
 }
 
@@ -106,6 +120,11 @@
   padding-top: 1em;
 }
 
+.menu-list {
+  list-style: none;
+  margin: 0 1em;
+}
+
 .menu-card h3 {
   font-size: 1em;
 }
@@ -113,6 +132,17 @@
 .menu-card li,
 p {
   font-size: 0.75em;
+}
+
+.menu-card li {
+  border-bottom: 1px dashed $greymist;
+  margin: $sp3 0;
+}
+
+.menu-card button {
+  width: 10em;
+  padding: $sp2;
+  border-radius: 0.25em;
 }
 
 @import "modal";
@@ -126,8 +156,13 @@ p {
   p {
     font-size: 1em;
   }
+}
 
-
+@media screen and (min-width: $mobile) {
+  .menu-card-img-container > img {
+    height: 100px;
+    width: 100px;
+  }
 }
 
 @media screen and (min-width: $ipadpro) {
@@ -146,25 +181,21 @@ p {
   article.menu-card:last-of-type:nth-of-type(odd) {
     margin-right: auto;
   }
+
+  .btn:hover {
+    filter: brightness(0.9);
+    cursor: pointer;
+  }
 }
 
-@media screen and (min-width: $superwide) {
-  #restaurants-headings > h2 {
-    font-size: 3em;
-  }
-
-  #restaurants-headings > p {
-    font-size: 2em;
-  }
-
-  .menu-card h3 {
-    font-size: 2em;
+@media screen and (min-width: $widescreen) {
+  #menu-btn-container {
+    width: 100%;
+    justify-content: center;
   }
 
   .menu-card li,
   p {
     font-size: 1.25em;
   }
-
-
 }

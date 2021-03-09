@@ -1,8 +1,6 @@
 import announcementData from '../assets/announcement-data.json';
 let slideIndex = 1;
 
-
-
 const renderSlides = () => {
   const modalSlidesContainer = document.querySelector('#announcement-slides-container');
   modalSlidesContainer.innerHTML = "";
@@ -20,6 +18,7 @@ const renderSlides = () => {
     const slideImg = document.createElement('img');
     slideImg.src = slide.image;
     slideImg.alt = slide.name;
+    slideImg.loading = 'lazy';
     const slideN = document.createElement('span');
     slideN.innerHTML = slide.id;
     slideN.classList.add('slide-number');
@@ -42,7 +41,6 @@ const renderSlides = () => {
   showSlides(slideIndex);
 };
 
-
 const plusSlides = (n) => {
   showSlides(slideIndex += n);
 };
@@ -50,8 +48,6 @@ const plusSlides = (n) => {
 function currentSlide(n) {
   showSlides(slideIndex = n);
 }
-
-
 
 function showSlides(n) {
   let i;

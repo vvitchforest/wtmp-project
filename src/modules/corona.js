@@ -5,21 +5,27 @@ const coronaUrl = `/pivot/prod/fi/epirapo/covid19case/fact_epirapo_covid19case.j
 const getCoronaInfo = async () => {
   try {
     const data = await fetchGet(`${coronaProxyUrl}${coronaUrl}`);
-    console.log(data);
-    return data.dataset;
+    return parseCoronaData(data.dataset);
   } catch (error) {
     throw new Error(error.message);
   }
 };
 
 const parseCoronaData = (coronaData) => {
-
   let coronaObj = {
     title: coronaData.label,
-    name: coronaData,
+    area: coronaData.dimension.hcdmunicipality2020.category.label[445193],
+    casesThisWeek: "",
+    casesTotal: ""
   };
 
-  console.log(coronaObj);
+  const casesArray = Object.values(coronaData.value);
+  const totalCases = casesArray[ casesArray.length - 1 ];
+  const thisWeek = casesArray[ casesArray.length - 2] ;
+
+  coronaObj.casesThisWeek = thisWeek;
+  coronaObj.casesTotal = totalCases;
+  return coronaObj;
 };
 
 const CoronaData = { getCoronaInfo };

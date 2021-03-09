@@ -12,12 +12,9 @@ let today = new Date().toISOString().split('T')[0];
 console.log(today);
 
 const languageBtn = document.querySelector('#menu-language-btn');
-const infoBtn = document.querySelector('#info-btn');
 const addRestaurantBtn = document.querySelector('#add-restaurant-btn');
 const modeToggle = document.getElementById('checkbox');
-const announcementModal = document.getElementById('announcement-modal');
 const weeklyMenuModal = document.getElementById('myModal');
-
 const weatherDiv = document.getElementById('weather-content');
 const coronaDiv = document.getElementById('corona-data');
 
@@ -42,10 +39,16 @@ const loadCoronaData = async () => {
 };
 
 const renderCoronaData = (coronaData) => {
+  console.log(coronaData);
+  const coronaTitle = document.createElement('h4');
   const casesThisWeek = document.createElement('span');
   const totalCasesUusimaa = document.createElement('span');
 
+  coronaTitle.innerHTML = `${coronaData.area}`;
+  casesThisWeek.innerHTML = `Tartuntoja tällä viikolla: ${coronaData.casesThisWeek}`;
+  totalCasesUusimaa.innerHTML = `Kokonaistartunnat: ${coronaData.casesTotal}`;
 
+  coronaDiv.appendChild(coronaTitle);
   coronaDiv.appendChild(casesThisWeek);
   coronaDiv.appendChild(totalCasesUusimaa);
 
@@ -53,7 +56,8 @@ const renderCoronaData = (coronaData) => {
 
 const renderCurrentWeather = (weatherData) => {
   const weatherImg = document.createElement('img');
-  weatherImg.src = `http://openweathermap.org/img/wn/${weatherData.weather[0].icon}.png`;
+  weatherImg.src = `https://openweathermap.org/img/wn/${weatherData.weather[0].icon}.png`;
+  weatherImg.alt = "weather-image";
 
   const weatherDesc = document.createElement('p');
   weatherDesc.innerHTML = `${weatherData.weather[0].main}`;
@@ -87,7 +91,6 @@ let unselectedRestaurants = [
     name: 'sodexo-myllypuro',
     id: 158,
     type: SodexoData,
-
   },
 ];
 
@@ -145,6 +148,7 @@ const createRestaurantCards = (restaurants) => {
     const image = document.createElement('img');
     image.src = restaurant.type.getRestaurantLogo();
     image.id = restaurant.name + '-img-id';
+    image.alt = "restaurant-logo";
 
     const cardTitle = document.createElement('h3');
     cardTitle.innerHTML = restaurant.title;
@@ -153,16 +157,22 @@ const createRestaurantCards = (restaurants) => {
     cardContent.classList.add('menu-card-content');
     cardContent.id = restaurant.name;
 
+    const cardBtn = document.createElement('button');
+    cardBtn.classList.add('btn');
+    cardBtn.id = restaurant.name + '-btn-id';
+    cardBtn.innerHTML = "VIIKON MENU";
+
     cardImgContainer.appendChild(image);
     cardHeader.appendChild(cardImgContainer);
     cardHeader.appendChild(cardTitle);
     restaurantCard.appendChild(cardHeader);
     restaurantCard.appendChild(cardContent);
+    restaurantCard.append(cardBtn);
     cardContainer.appendChild(restaurantCard);
 
-    Modal.setModalControls(image.id, weeklyMenuModal.id);
+    Modal.setModalControls(cardBtn.id, weeklyMenuModal.id);
 
-      document.getElementById(image.id).addEventListener('click', () => {
+      document.getElementById(cardBtn.id).addEventListener('click', () => {
         const weeklyMenu = loadWeeklyData(restaurant);
         Modal.renderModalContent(weeklyMenu);
       });
@@ -311,7 +321,6 @@ const loadHSLData = async () => {
 };
 
 const serviceWorker = () => {
-
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('./service-worker.js').then(registration => {
@@ -396,7 +405,7 @@ const init = () => {
   loadWeatherData();
   loadCoronaData();
 
-  //serviceWorker();
+  serviceWorker();
 };
 
 init();

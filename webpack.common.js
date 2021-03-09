@@ -38,9 +38,9 @@ module.exports = {
       //maximumFileSizeToCacheInBytes: 5 * 1024 * 1024
     }),
     new WebpackPwaManifest({
-      name: 'Lunch Progressive Web App',
-      short_name: 'LunchPWA',
-      description: 'Describe your Progressive Web App here',
+      name: 'Metropolia Info Karaportti progressive web app',
+      short_name: 'MetropoliaInfo',
+      description: 'Metropolia Info Karaportti is an app which displays information about Karaportti campus, including lunch menus and transport.',
       background_color: '#ffffff',
       crossorigin: 'use-credentials',
       icons: [

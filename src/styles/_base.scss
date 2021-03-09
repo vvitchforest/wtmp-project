@@ -3,13 +3,7 @@
   src: url(../assets/fonts/Open_Sans/OpenSans-Regular.ttf),
   url(../assets/fonts/Open_Sans/OpenSans-Bold.ttf),
   url(../assets/fonts/Open_Sans/OpenSans-SemiBold.ttf);
-}
-
-
-@font-face {
-  font-family: 'Roboto Slab';
-  src: url(../assets/fonts/Roboto_Slab/static/RobotoSlab-Regular.ttf),
-  url(../assets/fonts/Roboto_Slab/static/RobotoSlab-Bold.ttf);
+  font-display: swap;
 }
 
 /*THEME COLOURS*/
@@ -23,8 +17,6 @@ $dusk: #252032;
 $dark: #0d1117;
 $black: #000000;
 
-
-
 /*Colours need to be converted to CSS variables, because switching to dark theme doesn't work with SASS variables*/
 :root {
   --bg-color: #{$white};
@@ -36,8 +28,7 @@ $black: #000000;
   --heading-color: #{$charcoal};
   --border-color: #{$greymist};
   --bg-img: url(../assets/images/main-bg.jpg);
-  --info-border: none;
-
+  --bg-img-webp: url(../assets/images/main-bg.webp);
 }
 
 /*DARK THEME*/
@@ -51,13 +42,11 @@ $black: #000000;
   --heading-color: #{$lightgrey};
   --border-color: #{$greymist};
   --bg-img: #{$dark};
+  --bg-img-webp: #{$dark};
   --info-border: #{$greymist};
 }
 
-
 /*BREAKPOINTS*/
-
-$superwide : 1400px;
 $widescreen: 1200px;
 $ipadpro: 1024px;
 $mobile: 768px;
@@ -79,9 +68,7 @@ $sp4: 1em;
 $sp5: 1.25em;
 $sp6: 1.5em;
 
-$letter-spacing: 0.02em;
+$letter-spacing: 0.01em;
 $letter-spacing-header: 0.04em;
 $letter-spacing-btn: 0.125em;
-
-
 $card-border-radius: 0.5em;
