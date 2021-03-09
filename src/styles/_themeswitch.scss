@@ -2,12 +2,11 @@
   position: absolute;
   top: 1em;
   right: 2em;
+  padding-left: 2em;;
 
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  font-family: "Lato", sans-serif;
-
 }
 
 .theme-switch {
@@ -31,7 +30,6 @@
   border-radius: 1.25em;
   cursor: pointer;
   transition: all 0.4s ease-in-out;
-
 }
 
 input:checked + .slider-theme {
@@ -39,9 +37,9 @@ input:checked + .slider-theme {
 }
 
 .slider-theme::before {
-  content: '';
+  content: "";
   background-color: $secondary;
-  background-image: url('../assets/icons/moon-outline.svg');
+  background-image: url("../assets/icons/moon-outline.svg");
   background-size: 1.5em;
   background-position: center;
   background-repeat: no-repeat;
@@ -59,9 +57,9 @@ input:checked + .slider-theme::before {
 }
 
 @media screen and (min-width: $mobile) {
-.theme-switch-container {
-  position: relative;
-  top: 0;
-  right: 0;
-}
+  .theme-switch-container {
+    position: relative;
+    top: 0;
+    right: 0;
+  }
 }

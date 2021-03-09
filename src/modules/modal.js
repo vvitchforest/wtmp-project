@@ -35,7 +35,7 @@ openModalImgBtn.addEventListener('click', modalOpen);
     const modal = document.querySelector('.modal-content');
     const weeklyMenuContainer = document.querySelector('#weekly-menu-container');
     const modalParagraph = document.createElement('p');
-    modalParagraph.innerHTML += `<h3>Viikko ${weeklyMenu.WeekNumber}</h3><br>`;
+    modalParagraph.innerHTML += `<h3> Viikko ${weeklyMenu.WeekNumber}</h3><br>`;
 
     for(const day of weeklyMenu.DailyMenus) {
       modalParagraph.innerHTML += `<br>${day.day} ${day.date}<br><br>`;

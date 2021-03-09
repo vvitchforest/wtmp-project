@@ -18,7 +18,7 @@ const modeToggle = document.getElementById('checkbox');
 const announcementModal = document.getElementById('announcement-modal');
 const weeklyMenuModal = document.getElementById('myModal');
 
-const weatherDiv = document.getElementById('weather');
+const weatherDiv = document.getElementById('weather-content');
 const coronaDiv = document.getElementById('corona-data');
 
 const loadWeatherData = async () => {
@@ -44,6 +44,7 @@ const loadCoronaData = async () => {
 const renderCoronaData = (coronaData) => {
   const casesThisWeek = document.createElement('span');
   const totalCasesUusimaa = document.createElement('span');
+
 
   coronaDiv.appendChild(casesThisWeek);
   coronaDiv.appendChild(totalCasesUusimaa);
@@ -161,12 +162,10 @@ const createRestaurantCards = (restaurants) => {
 
     Modal.setModalControls(image.id, weeklyMenuModal.id);
 
-    if (restaurant.type === FazerData) {
       document.getElementById(image.id).addEventListener('click', () => {
         const weeklyMenu = loadWeeklyData(restaurant);
         Modal.renderModalContent(weeklyMenu);
       });
-    }
   }
 };
 
@@ -234,7 +233,7 @@ const switchLanguage = () => {
 
 const loadWeeklyData = async (restaurant) => {
   try {
-    const weeklyMenu = await FazerData.getWeeklyMenu(restaurant.id, userSettings.lang, today);
+    const weeklyMenu = await restaurant.type.getWeeklyMenu(restaurant.id, userSettings.lang, today);
     console.log(weeklyMenu);
     return weeklyMenu;
   }
@@ -392,11 +391,10 @@ const init = () => {
   modeToggle.addEventListener('change', switchTheme, false);
   languageBtn.addEventListener('click', switchLanguage);
   addRestaurantBtn.addEventListener('click', addingRestaurants);
-  infoBtn.addEventListener('click', Announcement.renderSlides);
-  Modal.setModalControls(infoBtn.id, announcementModal.id);
+  Announcement.renderSlides();
   loadHSLData();
-  /*loadWeatherData();
-  loadCoronaData();*/
+  loadWeatherData();
+  loadCoronaData();
 
   //serviceWorker();
 };

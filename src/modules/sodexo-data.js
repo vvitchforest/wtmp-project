@@ -2,6 +2,7 @@
 import { fetchGet } from './network';
 const dailyUrl = `https://www.sodexo.fi/ruokalistat/output/daily_json`;
 const imageUrl = './assets/images/sodexo.jpg';
+const weeklyUrl = `https://www.sodexo.fi/ruokalistat/output/weekly_json`;
 
 /**
  * Parses course arrays from Sodexo menu
@@ -35,12 +36,41 @@ const parseSodexoMenu = (sodexoMenu) => {
   return { fi: coursesFi, en: coursesEn };
 };
 
+const parseSodexoWeeklyMenu = (sodexoWeeklyMenu, lang) => {
+  console.log(sodexoWeeklyMenu);
+  let setmenus = [];
+  const parsedWeeklymenu = {
+    WeekNumber: sodexoWeeklyMenu.timeperiod,
+    DailyMenus: setmenus
+  };
+
+  const mealDates = sodexoWeeklyMenu.mealdates;
+  for (const mealdate of mealDates) {
+    let coursesArray = [];
+    let weekDay = {
+      day: mealdate.date,
+      date: "",
+      courses: coursesArray,
+    };
+    const courses = Object.values(mealdate.courses);
+    console.log(courses);
+    for (const course of courses) {
+      const mealFi = course.title_fi + " (" + course.dietcodes + ")";
+      const mealEn = course.title_en + " (" + course.dietcodes + ")";
+      (lang === 'fi' ? coursesArray.push(mealFi) : coursesArray.push(mealEn));
+    }
+    setmenus.push(weekDay);
+  };
+  console.log(parsedWeeklymenu);
+  return parsedWeeklymenu;
+};
+
 const getRestaurantLogo = () => {
   return imageUrl;
 };
 
 const getDailyMenu = async (restaurantId, lang, date) => {
-  date = '2021-03-02';
+
   let menuData;
   try {
     menuData = await fetchGet(`${dailyUrl}/${restaurantId}/${date}`);
@@ -51,5 +81,15 @@ const getDailyMenu = async (restaurantId, lang, date) => {
   return (lang === 'fi') ? parsedMenu.fi : parsedMenu.en;
 };
 
-const SodexoData = { getDailyMenu, getRestaurantLogo };
+const getWeeklyMenu = async (restaurantId, lang) => {
+  let menuData;
+  try {
+    menuData = await fetchGet(`${weeklyUrl}/${restaurantId}`);
+  } catch (error) {
+    throw new Error(error.message);
+  }
+  return parseSodexoWeeklyMenu(menuData, lang);
+};
+
+const SodexoData = { getDailyMenu, getWeeklyMenu, getRestaurantLogo };
 export default SodexoData;

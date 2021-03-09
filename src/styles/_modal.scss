@@ -13,7 +13,7 @@
 }
 
 /* Modal Content/Box */
-.modal-content, .announcement-modal-content {
+.modal-content {
   position: relative;
   background-color: #fefefe;
   margin: 1% auto; /* 15% from the top and centered */
@@ -23,8 +23,29 @@
 
 }
 
+.announcement-modal {
+  width: 100%;
+
+}
+
 .announcement-modal-content {
-  width: 50%;
+  position: relative;
+  width: 100%;
+  padding-bottom: 1em;
+}
+
+.slide-number-container {
+  position: absolute;
+  top: 90%;
+  left: 45%;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 0.5em;
+  border-radius: $card-border-radius;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.5em;
 }
 
 .modal-content {
@@ -71,6 +92,7 @@
   border-radius: 0 3px 3px 0;
   user-select: none;
   -webkit-user-select: none;
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 /* Position the "next button" to the right */
@@ -86,3 +108,14 @@
 }
 
 
+@media screen and (min-width: $mobile) {
+  .slide-number-container {
+    font-size: 0.75em;
+  }
+}
+
+@media screen and (max-width: 300px) {
+  .slide-number-container {
+    font-size: 0.3em;
+  }
+}

@@ -20,7 +20,6 @@ const parseCoronaData = (coronaData) => {
   };
 
   console.log(coronaObj);
-
 };
 
 const CoronaData = { getCoronaInfo };

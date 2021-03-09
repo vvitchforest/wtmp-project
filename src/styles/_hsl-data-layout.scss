@@ -1,3 +1,5 @@
+@import "headers";
+
 #transport {
   display: flex;
   flex-direction: column;
@@ -12,47 +14,17 @@
 }
 
 #transport-header {
-  height: 30vh;
   width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: $dusk;
-  position: relative;
-}
-
-#transport-header img {
-  height: 100px;
-  width: 100px;
- margin-left: 5vw;
- align-self: flex-start;
-}
-
-#transport-header > div {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
-  color: $white;
-}
-
-#transport-header h2 {
-  font-size: 1.5em;
-}
-
-#transport-header p {
-  font-size: 1em;
+  background-color: #0085cf;
 }
 
 /*GRID*/
-.hsl-grid{
+.hsl-grid {
   display: grid;
   width: 95%;
-  grid-template-areas: ". departures"
-                       "time content";
+  grid-template-areas:
+    ". departures"
+    "time content";
   grid-template-columns: 60px;
   grid-template-rows: 60px;
   margin: 2em 0;
@@ -61,14 +33,13 @@
   box-shadow: 2px 3px 15px var(--shadow);
   border-radius: $card-border-radius;
 
-
-  .grid-titles{
+  .grid-titles {
     grid-area: departures;
     display: grid;
     // 5 titles
     grid-template-columns: 1fr 2fr 1fr 3fr;
     text-transform: uppercase;
-    & > div{
+    & > div {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -76,10 +47,10 @@
       height: 100%;
     }
   }
-  .grid-time{
+  .grid-time {
     grid-area: time;
     display: grid;
-    & > div{
+    & > div {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -88,21 +59,19 @@
       box-shadow: inset 0 1px 0 0 $greymist;
     }
   }
-  .grid-content{
+  .grid-content {
     grid-area: content;
     display: grid;
 
     grid-template-columns: 1fr 2fr 1fr 3fr;
-    & > div{
+    & > div {
       display: flex;
       align-items: center;
       justify-content: center;
       width: 100%;
       height: 100%;
-       box-shadow: inset 1px 0 0 $greymist, inset 0 1px 0 0 $greymist;
-
+      box-shadow: inset 1px 0 0 $greymist, inset 0 1px 0 0 $greymist;
     }
-
   }
 }
 
@@ -112,17 +81,14 @@
   }
 }
 
-
 @media screen and (min-width: $small) {
   #transport-header img {
-   margin-left: 10vw;
-   align-self: center;
+    margin-left: 10vw;
+    align-self: center;
   }
-
 }
 
 @media screen and (min-width: $mobile) {
-
   .hsl-data-container {
     font-size: 1em;
   }
@@ -130,36 +96,12 @@
   .hsl-grid {
     width: 80%;
   }
-  #transport-header h2 {
-    font-size: $h2-size;
-  }
-
-  #transport-header p {
-    font-size: $p-medium;
-  }
-}
-
-@media screen and (min-width: $ipadpro) {
-  #transport-header img {
-    height: 150px;
-    width: 150px;
-  }
 }
 
 @media screen and (min-width: $widescreen) {
-
   .hsl-grid {
-    width: 60%;
+    width: 50%;
   }
 }
 
-@media screen and (min-width: $superwide) {
-  #transport-header h2 {
-    font-size: 3em;
-  }
 
-  #transport-header p {
-    font-size: 2em;
-  }
-
-}

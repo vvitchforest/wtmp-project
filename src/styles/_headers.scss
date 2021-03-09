@@ -1,0 +1,41 @@
+.header-bg {
+  height: 10vh;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+
+}
+
+
+
+.headings {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  margin: 0 10vw;
+}
+
+
+.headings > h2 {
+  font-size: 1.5em;
+}
+
+.headings > p {
+  font-size: 1em;
+}
+
+@media screen and (min-width: $mobile) {
+  .headings > h2 {
+    font-size: $h2-size;
+  }
+
+  .headings > p {
+    font-size: $p-medium;
+  }
+}

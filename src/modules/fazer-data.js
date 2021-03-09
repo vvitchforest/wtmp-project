@@ -15,6 +15,7 @@ const parseMenu = (weeklyMenu, dayOfTheWeek) => {
 };
 
 const parseWeeklyMenu = (weeklyMenu) => {
+  console.log(weeklyMenu);
   let setmenus = [];
   let parsedWeeklyMenu = {
     WeekNumber: weeklyMenu.WeekNumber,
@@ -27,17 +28,16 @@ const parseWeeklyMenu = (weeklyMenu) => {
     let weekDay = {
       day: lunchMenu.DayOfWeek,
       date: lunchMenu.Date,
-      price: "",
       courses: coursesArray,
     };
 
     lunchMenu.SetMenus.forEach((setMenu) => {
       const meals = setMenu.Meals.map(x => x.Name).join(", ") + ` (${filterDiets(setMenu)})`;
       coursesArray.push(meals);
-      weekDay.price = setMenu.Price;
     });
     setmenus.push(weekDay);
   });
+  console.log(parsedWeeklyMenu);
   return parsedWeeklyMenu;
 };
 
@@ -57,7 +57,7 @@ const filterDiets = (setMenu) => {
   const count = (array, search) => array.reduce((n, x) => n + (x === search), 0);
   for (const Diet of tbaDiets) {
     if (count(tbaDiets, Diet) === Object.values(setMenu.Meals).length) {
-      commonDiets.push(Diet);
+      commonDiets.push(" " + Diet);
     }
   }
   const finalDiets = commonDiets.filter((value, index, self) => {

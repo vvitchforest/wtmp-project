@@ -12,17 +12,16 @@
 <body>
   <!--NABVAR-->
   <nav class="topnav">
-
     <ul class="nav-items">
       <li><a href="#restaurants-content-id">Ruokalistat</a></li>
       <li><a href="#transport">Liikenneyhteydet</a></li>
     </ul>
     <div class="theme-switch-container">
-          <label class="theme-switch" for="checkbox">
-            <input type="checkbox" id="checkbox">
-            <div class="slider-theme"></div>
-          </label>
-        </div>
+      <label class="theme-switch" for="checkbox">
+        <input type="checkbox" id="checkbox">
+        <div class="slider-theme"></div>
+      </label>
+    </div>
     <div class="mobile-icon-container">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="ionicon" viewBox="0 0 512 512">
         <title>Menu</title>
@@ -45,40 +44,45 @@
         </header>
       </div>
       <div id="landing-page-right">
-
-
-
-        <section id="info-container">
-          <article id="info-box">
-            <h2>Ajankohtaista</h2>
-            <div class="info-card">
-              <h3>COVID-19 tiedote</h3>
-              <p>Metropolian koronaviruspandemiaa koskevat ohjeet löytyvät täältä.
-              </p>
-              <button id="info-btn">AVAA</button>
+        <article id="info-box" class="info-box">
+          <div class="main-title-area">
+            <h3>TIEDOTTEET</h3>
+          </div>
+          <div id="announcement-modal">
+            <!-- Modal content -->
+            <div class="announcement-modal-content">
+              <div id="announcement-slides-container"></div>
             </div>
-          </article>
-          <div id="weather"></div>
-          <diV id="corona-data"></diV>
+          </div>
+        </article>
+        <div id="info-bottom-right">
+          <div id="weather-container" class="info-box">
+            <div class="main-title-area">
+              <h3>PÄIVÄN SÄÄ</h3>
+            </div>
+            <div id="weather-content"></div>
+          </div>
+          <div id="corona-data" class="info-box">
+            <div class="main-title-area">
+              <h3>KORONATARTUNNAT</h3>
+            </div>
+          </div>
+        </div>
       </div>
-  </section>
-
   </section>
   <!--RESTAURANTS AREA-->
   <section class="restaurants-content" id="restaurants-content-id">
-    <header id="restaurants-header">
-      <div class="restaurants-bg">
-        <div id="restaurants-headings">
-          <h2>Ruokalistat</h2><br>
-          <p>Metropolian ravintoloiden päivittäiset ruokalistat löytyvät täältä. Viikoittaisiin ruokalistoihin pääset
-            painamalla ravintolan logoa.</p>
+    <header id="restaurants-header" class="header">
+      <div class="header-bg">
+        <div class="headings">
+          <h2>Ruokalistat</h2>
         </div>
       </div>
     </header>
-    <div id="menu-btn-container">
-      <button id="menu-language-btn">FI/EN</button>
 
-        <label for="restaurants">Valitse ravintola:</label>
+    <div id="menu-btn-container">
+      <label for="restaurants">Valitse ravintola:</label>
+      <div id="btn-wrapper">
         <select id="restaurants-select" name="restaurants">
         </select>
         <button id="add-restaurant-btn" name="add-restaurant">
@@ -89,8 +93,8 @@
             <line x1="5" y1="12" x2="19" y2="12" />
           </svg>
         </button>
-
-
+      </div>
+      <button id="menu-language-btn">FI/EN</button>
     </div>
     <div class="menu-cards-container"></div>
   </section>
@@ -102,24 +106,18 @@
     <!-- Modal content -->
     <div class="modal-content">
       <span id="myModal-close" class="close">&times;</span>
-    <div id="weekly-menu-container"></div>
+      <div id="weekly-menu-container"></div>
     </div>
   </div>
-  <div id="announcement-modal" class="modal">
-    <!-- Modal content -->
-    <div class="announcement-modal-content">
-      <span id="announcement-modal-close" class="close">&times;</span>
-    <div id="announcement-slides-container"></div>
-    </div>
-  </div>
+
 
 
   <section id="transport">
-    <header id="transport-header">
-      <img src="./assets/icons/hsl-logo.svg">
-      <div>
-        <h2>Reitit</h2>
-        <p>Seuraavat linjat Karaportin läheltä.</p>
+    <header id="transport-header" class="header">
+      <div class="header-bg">
+        <div class="headings">
+          <h2>Seuraavat linjat karaportin läheltä</h2>
+        </div>
       </div>
     </header>
     <div class="hsl-data-container"></div>

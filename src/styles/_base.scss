@@ -1,6 +1,15 @@
 @font-face {
-  font-family: 'Poppins';
-  src: url(../assets/fonts/Open_Sans/OpenSans-Regular.ttf);
+  font-family: 'Open Sans';
+  src: url(../assets/fonts/Open_Sans/OpenSans-Regular.ttf),
+  url(../assets/fonts/Open_Sans/OpenSans-Bold.ttf),
+  url(../assets/fonts/Open_Sans/OpenSans-SemiBold.ttf);
+}
+
+
+@font-face {
+  font-family: 'Roboto Slab';
+  src: url(../assets/fonts/Roboto_Slab/static/RobotoSlab-Regular.ttf),
+  url(../assets/fonts/Roboto_Slab/static/RobotoSlab-Bold.ttf);
 }
 
 /*THEME COLOURS*/
@@ -15,6 +24,7 @@ $dark: #0d1117;
 $black: #000000;
 
 
+
 /*Colours need to be converted to CSS variables, because switching to dark theme doesn't work with SASS variables*/
 :root {
   --bg-color: #{$white};
@@ -25,6 +35,9 @@ $black: #000000;
   --nav-text: #{$black};
   --heading-color: #{$charcoal};
   --border-color: #{$greymist};
+  --bg-img: url(../assets/images/main-bg.jpg);
+  --info-border: none;
+
 }
 
 /*DARK THEME*/
@@ -37,6 +50,8 @@ $black: #000000;
   --nav-text: #{$white};
   --heading-color: #{$lightgrey};
   --border-color: #{$greymist};
+  --bg-img: #{$dark};
+  --info-border: #{$greymist};
 }
 
 
@@ -49,7 +64,7 @@ $mobile: 768px;
 $small: 576px;
 
 /*FONTS*/
-$h1-size: 3em;
+$h1-size: 2.5em;
 $h2-size: 2em;
 $h3-size: 1.5em;
 $p-large: 1.5em;
@@ -64,7 +79,7 @@ $sp4: 1em;
 $sp5: 1.25em;
 $sp6: 1.5em;
 
-$letter-spacing: 0.01em;
+$letter-spacing: 0.02em;
 $letter-spacing-header: 0.04em;
 $letter-spacing-btn: 0.125em;
 

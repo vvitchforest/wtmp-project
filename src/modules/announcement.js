@@ -23,7 +23,10 @@ const renderSlides = () => {
     const slideN = document.createElement('span');
     slideN.innerHTML = slide.id;
     slideN.classList.add('slide-number');
-    mySlide.appendChild(slideN);
+    const slideNumberContainer = document.createElement('div');
+    slideNumberContainer.classList.add('slide-number-container');
+    slideNumberContainer.appendChild(slideN);
+    mySlide.appendChild(slideNumberContainer);
     mySlide.appendChild(slideImg);
     modalSlidesContainer.appendChild(mySlide);
   };

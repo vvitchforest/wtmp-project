@@ -1,5 +1,4 @@
-
-@import 'base';
+@import "base";
 
 * {
   margin: 0;
@@ -7,7 +6,8 @@
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   overflow-x: hidden;
   height: 100%;
   scroll-behavior: smooth;
@@ -16,48 +16,49 @@ html, body {
 body {
   background-color: var(--bg-color);
   letter-spacing: $letter-spacing;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
 
-@import 'navigation';
+@import "navigation";
+@import "themeswitch";
+
+/*LANDING PAGE*/
 
 #landing-page {
   display: flex;
   justify-content: center;
-  background-color: var(--bg-color);
-
+  background-image: var(--bg-img);
+  background-size: cover;
 }
 
 .content {
   display: flex;
   flex-direction: column;
   height: inherit;
-  width: 80%;
-  position: relative;
+  width: 100%;
+  margin: 0 $sp4;
 }
 
-#landing-page-left, #landing-page-right {
+#landing-page-left,
+#landing-page-right {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  margin-top: 3em;
 }
 
-#landing-page-right {
-  margin-bottom: 2em;
-}
+/*HEADER*/
 
-@import 'themeswitch';
-@import 'restaurants';
+#landing-page-left {
+  text-align: center;
+}
 
 #main-title {
-  padding: 2em;
   color: var(--heading-color);
 }
 
 #main-title img {
-  width: 400px;
+  width: 200px;
+  margin-top: $sp4;
 }
 
 #main-title > h1 {
@@ -73,86 +74,92 @@ body {
 #main-title > p {
   font-size: 1em;
   margin-top: $sp6;
-  letter-spacing: 0.01em;;
 }
 
-#weather {
-  height: 300px;
-  width: 300px;
-  background-color: hotpink;
+/*INFO AREA*/
+
+#landing-page-right {
+  margin: 2em 0;
+  justify-content: space-between;
 }
 
-#corona-data {
-  height: 200px;
-  width: 200px;
-  background-color: indigo;
+#info-bottom-right {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  margin-top: $sp4;
 }
 
-#info-box
-{
+.main-title-area {
+  background-color: $greymist;
+  width: 100%;
+  padding: 0.5em 1em;
+  margin: 0;
+  border-radius: 0.5em 0.5em 0 0;
+}
+
+.info-box {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 40vh;
-  min-width: 20vw;
-  border: 1px solid $greymist;
   border-radius: $card-border-radius;
-  padding: $sp4;
-}
-
-#info-container h2 {
-  text-align: center;
-  font-size: 1.5em;
-  color: var(--heading-color);
-}
-
-.info-card {
   background-color: var(--card-color);
-  color: var(--text-color);
-  margin-top: 2em;
-  padding: 1em;
-  border: none;
-  border-radius: $card-border-radius;
-  box-shadow: 2px 5px 10px var(--shadow);
+  box-shadow: var(--shadow);
 }
 
-#info-btn {
-  min-height: 2em;
-  min-width: 4em;
-  background-color: $primary;
-  color: white;
-  border: none;
-  box-shadow: var(--shadow);
-  border-radius: 0.25em;
+.info-box h3 {
+  padding-bottom: $sp1;
+  font-size: 0.75em;
+  align-self: flex-start;
   letter-spacing: $letter-spacing-btn;
 }
 
-.info-card h3 {
-  padding-bottom: $sp1;
-  font-size: 1.25em;
-}
-
-.info-card p {
+.info-box p {
   padding-bottom: $sp2;
   font-size: 1em;
 }
 
-@import 'hsl-data-layout';
+#weather-container,
+#corona-data {
+  min-height: 200px;
+  width: 100%;
+  justify-content: flex-start;
+}
 
+#corona-data {
+  margin-top: 1em;
+}
 
+@import "restaurants";
 
-@media screen and (min-width: $superwide) {
+@import "hsl-data-layout";
+
+@media screen and (min-width: $widescreen) {
   .content {
     flex-direction: row;
     justify-content: space-between;
   }
 
-  #main-title > h1 {
-    font-size: 4em;
+  #landing-page-left,
+  #landing-page-right {
+    flex: 1;
   }
 
-  #main-title > h2 {
-    font-size: 3em;
+  #landing-page-left {
+    text-align: start;
+  }
+
+  #main-title img {
+    padding-bottom: 2em;
+  }
+
+  #landing-page-right {
+    margin: 0 0 2em 0;
+  }
+
+  #main-title {
+    padding: 2em;
   }
 
   #main-title > p {
@@ -163,17 +170,14 @@ body {
     margin-top: 5vh;
   }
 
-
+  .info-box h3 {
+    font-size: 1.25em;
+  }
 }
 
 @media screen and (min-width: $mobile) {
-
   #landing-page {
-    min-height: 100vh;
-  }
-
-  #landing-page-left, #landing-page-right {
-    flex: 1;
+    min-height: 92vh;
   }
 
   #main-title > h1 {
@@ -185,20 +189,35 @@ body {
   }
 
   #main-title > p {
-    font-size: $p-medium;
+    font-size: $p-large;
   }
-
-  #info-container h2 {
-    font-size: $h2-size;
-  }
-
-  .info-card h3 {
-    font-size: $h3-size;
-  }
-
-  .info-card p {
-    font-size: $p-medium;
-  }
-
 }
 
+@media screen and (min-width: $small) {
+  .content {
+    width: 90%;
+    margin: 0 0;
+  }
+
+  #main-title img {
+    width: 400px;
+  }
+
+  #info-bottom-right {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .info-box h3 {
+    font-size: 1em;
+  }
+
+  #weather-container,
+  #corona-data {
+    width: 48%;
+  }
+
+  #corona-data {
+    margin-top: 0;
+  }
+}

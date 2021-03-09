@@ -7,7 +7,7 @@
   overflow: hidden;
   background-color: var(--nav-color);
   border-bottom: 2px solid $primary;
-  padding: 0 10vw;
+  padding: 0 6vw;
   position: relative;
 
   #logo-container {
@@ -24,13 +24,15 @@
     list-style: none;
 
     & a {
-      font-size: $p-medium;
+      font-size: 1.125em;;
       padding: 0.5em;
       text-decoration: none;
       border-radius: 0.25em;
       color: var(--nav-text);
       text-transform: uppercase;
-      font-weight: bold;
+      font-weight: 600;
+      font-family: 'Open Sans', sans-serif;
+      letter-spacing: $letter-spacing-btn;
     }
   }
 }
@@ -85,12 +87,6 @@
 }
 
 
-@media screen and (min-width: $superwide) {
 
-}
 
-@media screen and (min-width: 1500px) {
-  .topnav img {
-    height: 60px;
-  }
-}
+
