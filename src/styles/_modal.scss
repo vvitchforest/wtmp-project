@@ -20,6 +20,7 @@
   border: 1px solid #888;
   width: 80%;
   align-self: flex-start;
+
 }
 
 .close {
@@ -71,6 +72,10 @@
   justify-content: center;
   align-items: center;
   font-size: 0.5em;
+}
+
+.modal p {
+  color: black;
 }
 
 .previous,

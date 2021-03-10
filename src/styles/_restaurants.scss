@@ -1,7 +1,7 @@
 @import "headers";
 
 #restaurants-header {
-  background: #d40072;
+  background: var(--restaurants-header);
 }
 
 .restaurants-content {
@@ -66,13 +66,16 @@
   align-self: flex-end;
 }
 
+label {
+  color: var(--text-color);
+}
+
 #restaurants-select {
   outline: none;
   border: 1px solid var(--border-color);
   border-radius: 0.25em 0 0 0.25em;
   padding: $sp1;
   box-shadow: 2px 3px 10px var(--shadow);
-
 }
 
 /*CARDS*/
@@ -123,6 +126,7 @@
 .menu-list {
   list-style: none;
   margin: 0 1em;
+
 }
 
 .menu-card h3 {
@@ -132,6 +136,7 @@
 .menu-card li,
 p {
   font-size: 0.75em;
+  color: var(--text-color);
 }
 
 .menu-card li {
@@ -142,6 +147,7 @@ p {
 .menu-card button {
   width: 10em;
   padding: $sp2;
+  margin-top: $sp4;
   border-radius: 0.25em;
 }
 

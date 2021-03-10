@@ -17,16 +17,17 @@ const parseSodexoMenu = (sodexoMenu) => {
   const courses = Object.values(sodexoMenu);
   courses.forEach((course) => {
 
+    let priceString = course.price + ", ";
     const courseFin = {
       title: course.title_fi,
       diets: course.dietcodes,
-      price: course.price
+      price: priceString
     };
 
     const courseEn = {
       title: course.title_en,
       diets: course.dietcodes,
-      price: course.price
+      price: priceString
     };
 
     coursesFi.push(courseFin);
@@ -35,6 +36,13 @@ const parseSodexoMenu = (sodexoMenu) => {
 
   return { fi: coursesFi, en: coursesEn };
 };
+
+/**
+ * Parses weekly menu
+ * @param {Object} sodexoWeeklyMenu
+ * @param {String} lang
+ * @returns {Array}
+ */
 
 const parseSodexoWeeklyMenu = (sodexoWeeklyMenu, lang) => {
   console.log(sodexoWeeklyMenu);
@@ -69,8 +77,14 @@ const getRestaurantLogo = () => {
   return imageUrl;
 };
 
+/**
+ * Fetches daily menu
+ * @param {Int} restaurantId
+ * @param {String} lang
+ * @param {String} date
+ * @returns
+ */
 const getDailyMenu = async (restaurantId, lang, date) => {
-
   let menuData;
   try {
     menuData = await fetchGet(`${dailyUrl}/${restaurantId}/${date}`);
@@ -81,6 +95,13 @@ const getDailyMenu = async (restaurantId, lang, date) => {
   return (lang === 'fi') ? parsedMenu.fi : parsedMenu.en;
 };
 
+
+/**
+ * Fetches weekly menu
+ * @param {Int} restaurantId
+ * @param {String} lang
+ * @returns
+ */
 const getWeeklyMenu = async (restaurantId, lang) => {
   let menuData;
   try {

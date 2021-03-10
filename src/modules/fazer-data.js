@@ -6,6 +6,12 @@ console.log(date);*/
 import { fazerProxyUrl } from "../settings";
 import { fetchGet } from './network';
 
+/**
+ *Parses daily menu data
+ * @param {Object} weeklyMenu
+ * @param {Int} dayOfTheWeek
+ * @returns {Array}
+ */
 const parseMenu = (weeklyMenu, dayOfTheWeek) => {
   let setmenus = [];
   weeklyMenu.LunchMenus[dayOfTheWeek].SetMenus.forEach((setMenu) => {
@@ -14,6 +20,12 @@ const parseMenu = (weeklyMenu, dayOfTheWeek) => {
   return setmenus;
 };
 
+
+/**
+ * Parses weekly menu
+ * @param {Object} weeklyMenu
+ * @returns {Object}
+ */
 const parseWeeklyMenu = (weeklyMenu) => {
   console.log(weeklyMenu);
   let setmenus = [];
@@ -46,6 +58,11 @@ const getRestaurantLogo = () => {
   return imageUrl;
 };
 
+/**
+ * Filters all diets that meals in a set menu have in common
+ * @param {Array} setMenu
+ * @returns {Array}
+ */
 const filterDiets = (setMenu) => {
   let tbaDiets = [], commonDiets = [];
 
@@ -66,6 +83,11 @@ const filterDiets = (setMenu) => {
   return finalDiets;
 };
 
+/**
+ * Joins arrays of courses into a single array
+ * @param {Array} parsedMenu
+ * @returns {Array}
+ */
 const joinMeals = (parsedMenu) => {
   let coursesArray = [];
 
@@ -73,15 +95,26 @@ const joinMeals = (parsedMenu) => {
 
     const meals = setMenu.Meals.map(x => x.Name).join(", ");
     const course = {
-      price: setMenu.Price,
+      price: "",
       title: meals,
       diets: filterDiets(setMenu)
     };
+    if(setMenu.price != null) {
+      course.price = setMenu.price + ", ";
+    }
     coursesArray.push(course);
   });
 
   return coursesArray;
 };
+
+/**
+ * Fetches weekly menu
+ * @param {Int} restaurantId
+ * @param {String} lang
+ * @param {String} date
+ * @returns
+ */
 
 const getWeeklyMenu = async (restaurantId, lang, date) => {
   date = '2020-02-14';
@@ -93,11 +126,16 @@ const getWeeklyMenu = async (restaurantId, lang, date) => {
   }
 };
 
+/**
+ * Fetches daily menu
+ * @param {Int} restaurantId
+ * @param {String} lang
+ * @param {String} date
+ * @returns
+ */
 const getDailyMenu = async (restaurantId, lang, date) => {
-
-  date = '2020-02-14';
-
   let dayOfTheWeek = new Date().getDay();
+  date = '2020-02-14';
 
   dayOfTheWeek--;
   if (dayOfTheWeek === -1) {

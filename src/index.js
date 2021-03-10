@@ -1,4 +1,3 @@
-
 import SodexoData from './modules/sodexo-data';
 import FazerData from './modules/fazer-data';
 import Modal from './modules/modal';
@@ -6,69 +5,13 @@ import './styles/main.scss';
 import HSLData from './modules/hsl-data';
 import Announcement from './modules/announcement';
 import Weather from './modules/weather';
-import Corona from './modules/corona';
 
 let today = new Date().toISOString().split('T')[0];
-console.log(today);
-
 const languageBtn = document.querySelector('#menu-language-btn');
 const addRestaurantBtn = document.querySelector('#add-restaurant-btn');
 const modeToggle = document.getElementById('checkbox');
 const weeklyMenuModal = document.getElementById('myModal');
 const weatherDiv = document.getElementById('weather-content');
-const coronaDiv = document.getElementById('corona-data');
-
-const loadWeatherData = async () => {
-  try {
-    const weatherData = await Weather.getCurrentWeather();
-    renderCurrentWeather(weatherData);
-  }
-  catch (error) {
-    console.error(error);
-  }
-};
-
-const loadCoronaData = async () => {
-  try {
-    const coronaData = await Corona.getCoronaInfo();
-    renderCoronaData(coronaData);
-  }
-  catch (error) {
-    console.error(error);
-  }
-};
-
-const renderCoronaData = (coronaData) => {
-  console.log(coronaData);
-  const coronaTitle = document.createElement('h4');
-  const casesThisWeek = document.createElement('span');
-  const totalCasesUusimaa = document.createElement('span');
-
-  coronaTitle.innerHTML = `${coronaData.area}`;
-  casesThisWeek.innerHTML = `Tartuntoja tällä viikolla: ${coronaData.casesThisWeek}`;
-  totalCasesUusimaa.innerHTML = `Kokonaistartunnat: ${coronaData.casesTotal}`;
-
-  coronaDiv.appendChild(coronaTitle);
-  coronaDiv.appendChild(casesThisWeek);
-  coronaDiv.appendChild(totalCasesUusimaa);
-
-};
-
-const renderCurrentWeather = (weatherData) => {
-  const weatherImg = document.createElement('img');
-  weatherImg.src = `https://openweathermap.org/img/wn/${weatherData.weather[0].icon}.png`;
-  weatherImg.alt = "weather-image";
-
-  const weatherDesc = document.createElement('p');
-  weatherDesc.innerHTML = `${weatherData.weather[0].main}`;
-
-  const weatherTemp = document.createElement('span');
-  weatherTemp.innerHTML = `${weatherData.main.temp} °C`;
-
-  weatherDiv.appendChild(weatherImg);
-  weatherDiv.appendChild(weatherDesc);
-  weatherDiv.appendChild(weatherTemp);
-};
 
 let selectedRestaurants = [
   {
@@ -100,6 +43,10 @@ let userSettings = {
   restaurants: []
 };
 
+/**
+ * Creates restaurant options for <select> HTML element
+ * @param {Array} unselected - array of restaurant objects that are not selected
+ */
 const createRestaurantOptions = (unselected) => {
   const restaurantsSelect = document.querySelector('#restaurants-select');
   restaurantsSelect.innerHTML = "";
@@ -111,27 +58,10 @@ const createRestaurantOptions = (unselected) => {
   }
 };
 
-
-
-/**
- * Switches colour theme
- */
-
-const switchTheme = (event) => {
-  if (event.target.checked) {
-    userSettings.colorTheme = 'dark';
-  } else {
-    userSettings.colorTheme = 'light';
-  }
-  document.querySelector('body').setAttribute('data-theme', userSettings.colorTheme);
-  updateUserSettings();
-};
-
 /**
  * Creates html cards for each restaurant and sets event listeners to modal btn
- * @param {Array} restaurants array of restaurant objects
+ * @param {Array} restaurants array of (selected) restaurant objects
  */
-
 const createRestaurantCards = (restaurants) => {
   const cardContainer = document.querySelector('.menu-cards-container');
   cardContainer.innerHTML = "";
@@ -172,16 +102,79 @@ const createRestaurantCards = (restaurants) => {
 
     Modal.setModalControls(cardBtn.id, weeklyMenuModal.id);
 
-      document.getElementById(cardBtn.id).addEventListener('click', () => {
-        const weeklyMenu = loadWeeklyData(restaurant);
-        Modal.renderModalContent(weeklyMenu);
-      });
+    document.getElementById(cardBtn.id).addEventListener('click', () => {
+      const weeklyMenu = loadWeeklyData(restaurant);
+      Modal.renderModalContent(weeklyMenu);
+    });
   }
 };
 
+/**
+ * Fills menu content for each restaurant card
+ * @param {Array} menu daily menu of each restaurant
+ * @param {Object} restaurant of restaurants array
+ */
+const fillMenuCard = (menu, restaurant) => {
+  const cardContent = document.querySelector(`#${restaurant.name}`);
+  cardContent.innerHTML = "";
+
+  const menuList = document.createElement('ul');
+  menuList.classList.add('menu-list');
+
+  menu.forEach((course) => {
+    let listItem = document.createElement('li');
+    listItem.innerHTML = course.title + ", " + course.price + course.diets;
+    menuList.appendChild(listItem);
+  });
+  cardContent.appendChild(menuList);
+};
+
+/**
+ *
+ * @param {String} message - message displayed to user if loading data fails
+ * @param {Array} restaurant - restaurant of restaurants array
+ */
+const noDataNotification = (message, restaurant) => {
+  const cardContent = document.querySelector('#' + restaurant);
+  cardContent.innerHTML += `<p>${message}</p>`;
+};
+
+/**Loads restaurant daily data for restaurants */
+const loadData = async () => {
+  for (const restaurant of selectedRestaurants) {
+    try {
+      const parsedMenu = await restaurant.type.getDailyMenu(restaurant.id, userSettings.lang, today);
+      fillMenuCard(parsedMenu, restaurant);
+    }
+    catch (error) {
+      console.error(error);
+      noDataNotification(`${userSettings.lang == 'fi' ? 'Tälle päivälle ei löytynyt aterioita' : 'No meals were found for this day'}`, restaurant.name);
+    }
+  }
+};
+
+/**
+ *
+ * @param {Array} restaurant
+ * @returns {Object} weekly menu from restaurant data
+ */
+const loadWeeklyData = async (restaurant) => {
+  try {
+    const weeklyMenu = await restaurant.type.getWeeklyMenu(restaurant.id, userSettings.lang, today);
+    console.log(weeklyMenu);
+    return weeklyMenu;
+  }
+  catch (error) {
+    console.error(error);
+    noDataNotification(`${userSettings.lang == 'fi' ? 'Tälle päivälle ei löytynyt aterioita' : 'No meals were found for this day'}`, restaurant.name);
+  }
+};
+
+/**Adds restaurants from unselected to selected restaurants and updates user settings*/
 const addingRestaurants = () => {
   if (unselectedRestaurants.length > 0) {
     const restaurantOptions = document.querySelector('#restaurants-select');
+    //adding selected object from unselected restaurants array to selected restaurants array
     const selectedRestaurant = unselectedRestaurants.splice(unselectedRestaurants.findIndex(a => a.name === restaurantOptions.value), 1);
 
     const addedRestaurant = {
@@ -200,36 +193,55 @@ const addingRestaurants = () => {
 };
 
 /**
- * Fills menu content for each restaurant card
- * @param {Array} menu daily menu of each restaurant
- * @param {Object} restaurant of restaurants array
+ * Reads local storage restaurants user settings
+ * @param {Object} userSettings
+ * @returns {Array} of selected restaurant objects from local storage
  */
-
-const fillMenuCard = (menu, restaurant) => {
-  const cardContent = document.querySelector(`#${restaurant.name}`);
-  cardContent.innerHTML = "";
-
-  const menuList = document.createElement('ul');
-  menuList.classList.add('menu-list');
-
-  menu.forEach((course) => {
-    let listItem = document.createElement('li');
-    listItem.innerHTML = course.title + ", " + course.price + ", " + course.diets;
-    menuList.appendChild(listItem);
-  });
-  cardContent.appendChild(menuList);
+const getUserRestaurants = (userSettings) => {
+  for (const restaurant of userSettings.restaurants) {
+    if (restaurant.type === "FazerData") {
+      restaurant.type = FazerData;
+    } else if (restaurant.type === "SodexoData") {
+      restaurant.type = SodexoData;
+    }
+  }
+  return userSettings.restaurants;
 };
-
-const noDataNotification = (message, restaurant) => {
-  const cardContent = document.querySelector('#' + restaurant);
-  cardContent.innerHTML += `<p>${message}</p>`;
-};
-
 
 /**
- * Switches language fi/en in Sodexo menu
+ * Updates user settings
  */
+const updateUserSettings = () => {
+  const userRestaurants = [];
+  for (const addedRestaurant of selectedRestaurants) {
+    const addition = {
+      title: addedRestaurant.title,
+      name: addedRestaurant.name,
+      id: addedRestaurant.id,
+      type: (addedRestaurant.type === FazerData ? "FazerData" : "SodexoData")
+    };
+    userRestaurants.push(addition);
+  }
+  userSettings.restaurants = userRestaurants;
+  localStorage.setItem('userConfig', JSON.stringify(userSettings));
+};
 
+/**
+ * Switches colour theme and saves to local storage
+ */
+const switchTheme = (event) => {
+  if (event.target.checked) {
+    userSettings.colorTheme = 'dark';
+  } else {
+    userSettings.colorTheme = 'light';
+  }
+  document.querySelector('body').setAttribute('data-theme', userSettings.colorTheme);
+  updateUserSettings();
+};
+
+/**
+ * Switches menu language
+ */
 const switchLanguage = () => {
   if (userSettings.lang === 'fi') {
     userSettings.lang = 'en';
@@ -241,34 +253,11 @@ const switchLanguage = () => {
   updateUserSettings();
 };
 
-const loadWeeklyData = async (restaurant) => {
-  try {
-    const weeklyMenu = await restaurant.type.getWeeklyMenu(restaurant.id, userSettings.lang, today);
-    console.log(weeklyMenu);
-    return weeklyMenu;
-  }
-  catch (error) {
-    console.error(error);
-    noDataNotification(`${userSettings.lang == 'fi' ? 'Tälle päivälle ei löytynyt aterioita' : 'No meals were found for this day'}`, restaurant.name);
-  }
-
-};
-
-const loadData = async () => {
-  for (const restaurant of selectedRestaurants) {
-    try {
-      const parsedMenu = await restaurant.type.getDailyMenu(restaurant.id, userSettings.lang, today);
-      fillMenuCard(parsedMenu, restaurant);
-    }
-    catch (error) {
-      console.error(error);
-      noDataNotification(`${userSettings.lang == 'fi' ? 'Tälle päivälle ei löytynyt aterioita' : 'No meals were found for this day'}`, restaurant.name);
-    }
-  }
-};
-
+/**
+ * Renders HSL data into grid
+ * @param {*Array} departures
+ */
 const renderHSLDataLocation = (departures) => {
-
   document.querySelector('.hsl-data-container').innerHTML = "";
   const departureDiv = document.createElement('div');
   departureDiv.classList.add('hsl-grid');
@@ -308,7 +297,9 @@ const renderHSLDataLocation = (departures) => {
   document.querySelector('.hsl-data-container').appendChild(departureDiv);
 };
 
-
+/**
+ * Loads HSL data based on location (Karaportti lat and lon)
+ */
 const loadHSLData = async () => {
   try {
     const result = await HSLData.getDeparturesAndArrivalsByLocation(60.224200671262004, 24.758688330092166);
@@ -320,6 +311,9 @@ const loadHSLData = async () => {
   }
 };
 
+/**
+ * Setting up service workers
+ */
 const serviceWorker = () => {
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
@@ -332,37 +326,43 @@ const serviceWorker = () => {
   }
 };
 
-const getUserRestaurants = (userSettings) => {
-  for (const restaurant of userSettings.restaurants) {
-    if (restaurant.type === "FazerData") {
-      restaurant.type = FazerData;
-    } else if ( restaurant.type === "SodexoData"){
-      restaurant.type = SodexoData;
-    }
-  }
-  return userSettings.restaurants;
+/**
+ * Renders weather data
+ * @param {Object} weatherData
+ */
+const renderCurrentWeather = (weatherData) => {
+  const weatherImg = document.createElement('img');
+  weatherImg.src = `https://openweathermap.org/img/wn/${weatherData.weather[0].icon}.png`;
+  weatherImg.alt = "weather-image";
+
+  const weatherDesc = document.createElement('p');
+  weatherDesc.innerHTML = `${weatherData.weather[0].main}`;
+
+  const weatherTemp = document.createElement('span');
+  weatherTemp.innerHTML = `${weatherData.main.temp} °C`;
+
+  weatherDiv.appendChild(weatherImg);
+  weatherDiv.appendChild(weatherDesc);
+  weatherDiv.appendChild(weatherTemp);
 };
 
 /**
- * Updates user settings
+ * Loads weather data
  */
- const updateUserSettings = () => {
-  const userRestaurants = [];
-  for(const addedRestaurant of selectedRestaurants) {
-    const addition = {
-      title: addedRestaurant.title,
-      name: addedRestaurant.name,
-      id: addedRestaurant.id,
-      type: (addedRestaurant.type === FazerData ? "FazerData" : "SodexoData")
-    };
-    userRestaurants.push(addition);
+const loadWeatherData = async () => {
+  try {
+    const weatherData = await Weather.getCurrentWeather();
+    renderCurrentWeather(weatherData);
   }
-  userSettings.restaurants = userRestaurants;
-  localStorage.setItem('userConfig', JSON.stringify(userSettings));
+  catch (error) {
+    console.error(error);
+  }
 };
 
-
-const init = () => {
+/**
+ * Event listeners for navigation menu
+ */
+const setTopnav = () => {
   document.querySelector('.mobile-icon-container').addEventListener('click', () => {
     const topNav = document.querySelector('.topnav');
     const navList = document.querySelector('.nav-items');
@@ -378,6 +378,10 @@ const init = () => {
       banner.className = 'banner';
     }
   });
+};
+
+const init = () => {
+  setTopnav();
 
   //Load from local storage if exists or use default user settings
   if (localStorage.getItem('userConfig')) {
@@ -385,9 +389,8 @@ const init = () => {
 
     if (userSettings.restaurants.length > 0) {
       selectedRestaurants = getUserRestaurants(userSettings);
-      unselectedRestaurants = unselectedRestaurants.filter( (unselected) =>!selectedRestaurants.find( (selected) => ( selected.name === unselected.name) ));
+      unselectedRestaurants = unselectedRestaurants.filter((unselected) => !selectedRestaurants.find((selected) => (selected.name === unselected.name)));
     }
-
     document.querySelector('body').setAttribute('data-theme', userSettings.colorTheme);
     if (userSettings.colorTheme === 'dark') {
       modeToggle.checked = true;
@@ -403,8 +406,6 @@ const init = () => {
   Announcement.renderSlides();
   loadHSLData();
   loadWeatherData();
-  loadCoronaData();
-
   serviceWorker();
 };
 

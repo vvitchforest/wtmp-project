@@ -1,6 +1,10 @@
 import announcementData from '../assets/announcement-data.json';
 let slideIndex = 1;
 
+
+/**
+ * Creates slideshow
+ */
 const renderSlides = () => {
   const modalSlidesContainer = document.querySelector('#announcement-slides-container');
   modalSlidesContainer.innerHTML = "";
@@ -45,10 +49,6 @@ const plusSlides = (n) => {
   showSlides(slideIndex += n);
 };
 
-function currentSlide(n) {
-  showSlides(slideIndex = n);
-}
-
 function showSlides(n) {
   let i;
   const slides = document.getElementsByClassName("my-slides");
@@ -64,7 +64,6 @@ function showSlides(n) {
     slides[i].style.display = "none";
   }
   slides[slideIndex - 1].style.display = "block";
-
 };
 
 const Announcement = { renderSlides };

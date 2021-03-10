@@ -93,13 +93,13 @@ body {
 #info-bottom-right {
   display: flex;
   flex-direction: column;
-
   width: 100%;
   margin-top: $sp4;
 }
 
 .main-title-area {
   background-color: $greymist;
+  color: black;
   width: 100%;
   padding: 0.5em 1em;
   margin: 0;
@@ -112,6 +112,7 @@ body {
   align-items: center;
   border-radius: $card-border-radius;
   background-color: var(--card-color);
+  color: var(--text-color);
   box-shadow: var(--shadow);
 }
 
@@ -127,15 +128,13 @@ body {
   font-size: 1em;
 }
 
-#weather-container,
-#corona-data {
+#weather-container
+ {
   min-height: 200px;
   width: 100%;
+  display: flex;
   justify-content: flex-start;
-}
-
-#corona-data {
-  margin-top: 1em;
+  align-items: center;
 }
 
 @import "restaurants";

@@ -4,30 +4,12 @@ const momentRange = require('moment-range');
 momentRange.extendMoment(moment);
 
 const apiUrl = 'https://api.digitransit.fi/routing/v1/routers/hsl/index/graphql';
-
-/*const getDeparturesAndArrivalsByStopId = async (id) => {
-  const query = `{
-    stop(id: "HSL:${id}") {
-      name
-      stoptimesWithoutPatterns {
-        scheduledArrival
-        realtimeArrival
-        arrivalDelay
-        scheduledDeparture
-        realtimeDeparture
-        departureDelay
-        realtime
-        realtimeState
-        serviceDay
-        headsign
-        trip {
-          routeShortName
-          tripHeadsign
-        }
-      }
-    };
-  }`; */
-
+/**
+ * Fetches HSL data
+ * @param {Float} lat
+ * @param {Float} lon
+ * @returns {Object}
+ */
 const getDeparturesAndArrivalsByLocation = async (lat, lon) => {
   const query = `{
   stopsByRadius(lat: ${lat}, lon: ${lon}, radius: 600, first: 10) {
@@ -75,8 +57,13 @@ const getDeparturesAndArrivalsByLocation = async (lat, lon) => {
   }
 };
 
+/**
+ * Parses HSL data
+ * @param {Object} edges
+ * @returns {Array}
+ */
 const parseHSLData = (edges) => {
-  const departuresToDisplay = 15;
+  const departuresToDisplay = 20;
   let departures = [];
     for(const edge of edges) {
       const stopTimesArray = edge.node.stop.stoptimesWithoutPatterns;

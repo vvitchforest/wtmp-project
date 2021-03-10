@@ -1,3 +1,7 @@
+/**
+ * Renders modal content for weekly menu
+ * @param {Object} fetchResult parsed weekly menu
+ */
 const renderModalContent = async (fetchResult) => {
   const weeklyMenu = await fetchResult;
   console.log(weeklyMenu);
@@ -17,7 +21,11 @@ const renderModalContent = async (fetchResult) => {
   weeklyMenuContainer.appendChild(modalParagraph);
   modal.appendChild(weeklyMenuContainer);
 };
-
+/**
+ * Sets modal coontrols
+ * @param {String} triggerId
+ * @param {String} modalId
+ */
 const setModalControls = (triggerId, modalId) => {
   const modal = document.getElementById(modalId);
   const btn = document.getElementById(triggerId);

@@ -7,8 +7,10 @@
 }
 
 /*THEME COLOURS*/
-$primary:  #ff5000;
+$primary:  #e86526;
 $secondary:  #503592;
+$restaurants: #d40072;
+$hsl: #0085cf;
 $white: white;
 $lightgrey: #e7f2fd;
 $greymist: #9BADBF;
@@ -29,6 +31,8 @@ $black: #000000;
   --border-color: #{$greymist};
   --bg-img: url(../assets/images/main-bg.jpg);
   --bg-img-webp: url(../assets/images/main-bg.webp);
+  --restaurants-header: #{$restaurants};
+  --hsl-header: #{$hsl};
 }
 
 /*DARK THEME*/
@@ -44,6 +48,8 @@ $black: #000000;
   --bg-img: #{$dark};
   --bg-img-webp: #{$dark};
   --info-border: #{$greymist};
+  --restaurants-header: #{$dusk};
+  --hsl-header: #{$dusk};
 }
 
 /*BREAKPOINTS*/
